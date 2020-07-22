@@ -1,0 +1,42 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.aarushsystems.goatdiary.activity.LandingActivity">
+
+    <item
+        android:id="@+id/action_filter"
+        android:orderInCategory="100"
+        android:title="@string/filter"
+        android:icon="@drawable/ic_filter_list_white_24dp"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_detail_view"
+        android:orderInCategory="100"
+        android:title="@string/detail"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_summary_view"
+        android:orderInCategory="100"
+        android:title="@string/summary"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_about_us"
+        android:orderInCategory="100"
+        android:title="@string/action_about_us"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_terms_and_cond"
+        android:orderInCategory="200"
+        android:title="@string/action_terms_and_cond"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_export"
+        android:orderInCategory="300"
+        android:title="@string/action_export_to_excel"
+        app:showAsAction="never" />
+</menu>

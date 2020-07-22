@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.reports.ReportDailyActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar_ReportDailyActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_ReportDailyActivity"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <!--<ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="5dp"
+                    android:src="@drawable/logo_goat_diary" />-->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/title_activity_report_daily"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:paddingBottom="10dp"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:text="Select Date"
+                android:textAlignment="center"
+                android:textSize="17sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_date_add"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="1dp"
+                android:weightSum="2">
+
+                <EditText
+                    android:id="@+id/et1_fdate_ReportDailyActivity"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="0.5dp"
+                    android:layout_marginTop="0.5dp"
+                    android:layout_marginEnd="0.5dp"
+                    android:layout_marginBottom="0.5dp"
+                    android:layout_weight="0.6"
+                    android:background="@drawable/round_edittext_start"
+                    android:gravity="center"
+                    android:hint="dd"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:paddingStart="5dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="5dp"
+                    android:paddingBottom="8dp"
+                    android:textSize="13sp" />
+
+                <EditText
+                    android:id="@+id/et2_fdate_ReportDailyActivity"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="0.5dp"
+                    android:layout_marginTop="0.5dp"
+                    android:layout_marginBottom="0.5dp"
+                    android:layout_weight="0.6"
+                    android:background="@drawable/round_edittext_center"
+                    android:gravity="center"
+                    android:hint="mm"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:paddingStart="5dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="5dp"
+                    android:paddingBottom="8dp"
+                    android:textSize="13sp" />
+
+                <EditText
+                    android:id="@+id/et3_fdate_ReportDailyActivity"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="0.5dp"
+                    android:layout_marginTop="0.5dp"
+                    android:layout_marginEnd="0.5dp"
+                    android:layout_marginBottom="0.5dp"
+                    android:layout_weight="0.8"
+                    android:background="@drawable/round_edittext_end"
+                    android:gravity="center"
+                    android:hint="yyyy"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:maxLength="4"
+                    android:paddingStart="5dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="5dp"
+                    android:paddingBottom="8dp"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView_go_ReportDailyActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="@color/colorPrimaryDark"
+                android:paddingStart="20dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="8dp"
+                android:text="GO"
+                android:textColor="@android:color/white"
+                android:textSize="17sp" />
+
+            <!-- ADD SUMMARY -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="3dp"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/textView_title_add_summary_ReportDailyActivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:text=""
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="17sp" />
+
+            <com.evrencoskun.tableview.TableView
+                android:id="@+id/table_view_add_summary_ReportDailyActivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:selected_color="@color/colorPrimary"
+                app:show_horizontal_separator="true"
+                app:show_vertical_separator="true" />
+            <!-- ADD SUMMARY END -->
+
+            <!-- DELETE SUMMARY -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="3dp"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/textView_title_delete_summary_ReportDailyActivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:text=""
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="17sp" />
+
+            <com.evrencoskun.tableview.TableView
+                android:id="@+id/table_view_delete_summary_ReportDailyActivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:selected_color="@color/colorPrimary"
+                app:show_horizontal_separator="true"
+                app:show_vertical_separator="true" />
+            <!-- DELETE SUMMARY END -->
+
+            <!-- WEIGHT DONE -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="3dp"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/textView_title_weight_done_ReportDailyActivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:text="C) Weight Done - 3 animals"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="17sp" />
+
+            <com.evrencoskun.tableview.TableView
+                android:id="@+id/table_view_weight_done_ReportDailyActivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:selected_color="@color/colorPrimary"
+                app:show_horizontal_separator="true"
+                app:show_vertical_separator="true" />
+            <!-- WEIGHT DONE END -->
+
+
+            <!-- VACCINATION DONE -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="3dp"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/textView_title_vaccination_done_ReportDailyActivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:text="D) Vaccination Done - 4 animals"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="17sp" />
+
+            <com.evrencoskun.tableview.TableView
+                android:id="@+id/table_view_vaccination_done_ReportDailyActivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:selected_color="@color/colorPrimary"
+                app:show_horizontal_separator="true"
+                app:show_vertical_separator="true" />
+            <!-- VACCINATION DONE END -->
+
+
+            <!-- FEED STOCK -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="3dp"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/textView_title_feed_stock_ReportDailyActivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:text="E) Feed Stock Input - 20kg, Output - 20kg"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="17sp" />
+
+            <!--<com.evrencoskun.tableview.TableView
+                android:id="@+id/table_view_feed_stock_ReportDailyActivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:selected_color="@color/colorPrimary"
+                app:show_horizontal_separator="true"
+                app:show_vertical_separator="true" />-->
+            <!-- FEED STOCK END -->
+
+            <!-- MILK PRODUCED -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="3dp"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/textView_title_milk_produced_ReportDailyActivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:text="F) Milk Produced 70lt. Sold 40lt."
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="17sp" />
+
+            <!--<com.evrencoskun.tableview.TableView
+                android:id="@+id/table_view_milk_produced_ReportDailyActivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:selected_color="@color/colorPrimary"
+                app:show_horizontal_separator="true"
+                app:show_vertical_separator="true" />-->
+            <!-- MILK PRODUCED END -->
+
+
+            <!-- EXPENSE TOTAL -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="3dp"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/textView_title_expense_total_ReportDailyActivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:text=""
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="17sp" />
+
+            <com.evrencoskun.tableview.TableView
+                android:id="@+id/table_view_expense_total_ReportDailyActivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:selected_color="@color/colorPrimary"
+                app:show_horizontal_separator="true"
+                app:show_vertical_separator="true" />
+            <!-- EXPENSE TOTAL END -->
+
+            <!-- INCOME TOTAL -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="3dp"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/textView_title_income_total_ReportDailyActivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:text=""
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="17sp" />
+
+            <com.evrencoskun.tableview.TableView
+                android:id="@+id/table_view_income_total_ReportDailyActivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:selected_color="@color/colorPrimary"
+                app:show_horizontal_separator="true"
+                app:show_vertical_separator="true" />
+            <!-- INCOME TOTAL END -->
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
+

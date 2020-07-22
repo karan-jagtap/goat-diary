@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.aarushsystems.goatdiary">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:fullBackupContent="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_path" />
+        </provider>
+
+        <activity
+            android:name=".activity.reports.ReportDailyActivity"
+            android:label="@string/title_activity_report_daily"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.AddActivity"
+            android:windowSoftInputMode="stateUnchanged|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.reports.ReportIncomeActivity"
+            android:label="@string/title_activity_report_income"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.AddActivity"
+            android:windowSoftInputMode="stateUnchanged|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.reports.ReportExpenseActivity"
+            android:label="@string/title_activity_report_expense"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.AddActivity"
+            android:windowSoftInputMode="stateUnchanged|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.reports.ReportMilkActivity"
+            android:label="@string/title_activity_report_milk"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.AddActivity"
+            android:windowSoftInputMode="stateUnchanged|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.reports.ReportFeedStockActivity"
+            android:label="@string/title_activity_report_feed_stock"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.AddActivity"
+            android:windowSoftInputMode="stateUnchanged|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.reports.ReportBreedingActivity"
+            android:label="@string/title_activity_report_breeding"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.AddActivity"
+            android:windowSoftInputMode="stateUnchanged|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.reports.ReportVaccinationActivity"
+            android:label="@string/title_activity_report_vaccination"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.AddActivity"
+            android:windowSoftInputMode="stateUnchanged|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.reports.ReportWeightActivity"
+            android:label="@string/title_activity_report_weight"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.AddActivity"
+            android:windowSoftInputMode="stateUnchanged|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.ReportsMenuActivity"
+            android:label="@string/title_activity_reports_menu"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.AddActivity"
+            android:windowSoftInputMode="stateUnchanged|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.reports.ReportLivestockActivity"
+            android:label="@string/title_activity_report_livestock"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.AddActivity"
+            android:windowSoftInputMode="stateUnchanged|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.FeedActivity"
+            android:label="@string/title_activity_feed"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.AddActivity"
+            android:windowSoftInputMode="stateUnchanged|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.MilkActivity"
+            android:label="@string/title_activity_milk"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.AddActivity"
+            android:windowSoftInputMode="stateUnchanged|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.MasterSettingsActivity"
+            android:label="@string/title_activity_master_settings"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.AddActivity"
+            android:windowSoftInputMode="stateUnchanged|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.IncomeActivity"
+            android:label="@string/title_activity_income"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.AddActivity"
+            android:windowSoftInputMode="stateUnchanged|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.ExpenseActivity"
+            android:label="@string/title_activity_expense"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.AddActivity"
+            android:windowSoftInputMode="stateUnchanged|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.BreedingActivity"
+            android:label="@string/title_activity_breeding"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.AddActivity"
+            android:windowSoftInputMode="stateUnchanged|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.HealthCareActivity"
+            android:label="@string/title_activity_health_care"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.AddActivity"
+            android:windowSoftInputMode="stateUnchanged|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.WeightActivity"
+            android:label="@string/title_activity_weight"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.AddActivity"
+            android:windowSoftInputMode="stateUnchanged|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.DeleteActivity"
+            android:label="@string/title_activity_delete"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.AddActivity"
+            android:windowSoftInputMode="stateUnchanged|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.AddActivity"
+            android:label="@string/title_activity_add"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.AddActivity"
+            android:windowSoftInputMode="stateUnchanged"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.AboutUsActivity"
+            android:label="@string/title_activity_about_us"
+            android:parentActivityName=".activity.LandingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.PasswordResetActivity"
+            android:label="@string/title_activity_password_reset"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.DashBoardActivity"
+            android:label="@string/title_activity_dash_board"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.ProductFeaturesActivity"
+            android:label="@string/title_activity_highlights_features"
+            android:parentActivityName=".activity.LandingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.aarushsystems.goatdiary.activity.LandingActivity" />
+        </activity>
+        <activity
+            android:name=".activity.ContactUsActivity"
+            android:label="@string/title_activity_contact_us"
+            android:parentActivityName=".activity.LandingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.aarushsystems.goatdiary.activity.LandingActivity" />
+        </activity>
+        <activity
+            android:name=".activity.ForgotPasswordActivity"
+            android:label="@string/title_activity_forgot_password"
+            android:parentActivityName=".activity.LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.aarushsystems.goatdiary.activity.LoginActivity" />
+        </activity>
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/title_activity_register"
+            android:parentActivityName=".activity.LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.LoginActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/title_activity_login"
+            android:parentActivityName=".activity.LandingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.LandingActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

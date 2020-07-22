@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="#FEFEFE"
+    android:layout_height="match_parent"
+    tools:context=".activity.LandingActivity">
+
+    <Button
+        android:id="@+id/button_product_features_LandingActivity"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/button_pink"
+        android:text="@string/product_features"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@+id/button_social_LandingActivity"
+        app:layout_constraintEnd_toStartOf="@+id/button_user_manual_LandingActivity"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline_hor_60" />
+
+    <Button
+        android:id="@+id/button_user_manual_LandingActivity"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/button_orange"
+        android:text="@string/user_manual"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@+id/button_contact_LandingActivity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_product_features_LandingActivity"
+        app:layout_constraintTop_toTopOf="@+id/guideline_hor_60" />
+
+    <Button
+        android:id="@+id/button_social_LandingActivity"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/button_blue"
+        android:text="@string/link_social"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@+id/textView_continue_MainActivity"
+        app:layout_constraintEnd_toStartOf="@+id/button_contact_LandingActivity"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_product_features_LandingActivity" />
+
+    <Button
+        android:id="@+id/button_contact_LandingActivity"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/button_yellow"
+        android:text="@string/contact_us"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@+id/textView_continue_MainActivity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_social_LandingActivity"
+        app:layout_constraintTop_toBottomOf="@+id/button_user_manual_LandingActivity" />
+
+    <ImageView
+        android:id="@+id/imageView_LandingActivity"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/textView_goatdiary_LandingActivity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_language_LandingActivity"
+        app:srcCompat="@drawable/logo_goat_diary" />
+
+    <Spinner
+        android:gravity="center_horizontal"
+        android:id="@+id/spinner_language_LandingActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:entries="@array/languages"
+        android:paddingStart="10dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appbar_LandingActivity"
+        app:layout_constraintWidth_default="percent" />
+
+    <TextView
+        android:id="@+id/textView_goatdiary_LandingActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@android:color/black"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/button_product_features_LandingActivity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_LandingActivity" />
+
+    <TextView
+        android:id="@+id/textView_continue_MainActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/button_green"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="@string/press_to_continue"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_hor_60"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.6" />
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar_LandingActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:theme="@style/AppTheme.AppBarOverlay.Landing"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:background="@android:color/white"
+            android:id="@+id/toolbar_LandingActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/Toolbar.LandingActivity"
+            app:popupTheme="@style/AppTheme.PopupOverlay.Landing">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/company_name"
+                android:src="@drawable/logo_aarush_systems" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

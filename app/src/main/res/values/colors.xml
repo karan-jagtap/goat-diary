@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1F91E8</color>
+    <color name="colorPrimaryDark">#176AA9</color>
+    <color name="colorAccent">#0F426A</color>
+    <color name="button_blue">#1F91E8</color>
+    <color name="button_pink">#C2374D</color>
+    <color name="button_orange">#F04338</color>
+    <color name="button_green">#49A65B</color>
+    <color name="button_yellow">#F29C36</color>
+    <color name="color_about_us_bg">#D6EBFA</color>
+
+    <!--table-->
+    <color name="bg_line">#E7E7E7</color>
+    <color name="bg_color">#FF99DCD7</color>
+    <color name="cell_background_color">#ffffff</color>
+    <color name="cell_text_color">#1f1f1f</color>
+    <color name="header_line_color">@color/colorPrimary</color>
+    <!-- Material Design TableView Colors -->
+    <color name="md_cell_text_color">#1f1f1f</color>
+    <color name="md_column_header_text_color">#696969</color>
+    <color name="md_highlight_row_background_color">#EEEEEE</color>
+    <color name="md_selected_background_color">#F5F5F5</color>
+    <color name="md_cell_line_color">#dbdbdb</color>
+
+    <!-- Overriding the default values of the tableView -->
+    <!-- <color name="cell_line_color">#dbdbdb</color> -->
+    <color name="table_view_selected_background_color">@color/colorPrimary</color>
+    <color name="default_background_color">@color/cell_background_color</color>
+</resources>

@@ -1,0 +1,366 @@
+<resources>
+    <string name="app_name">Goat Diary</string>
+    <string name="title_activity_contact_us">Contact Us</string>
+    <string name="title_activity_milk">Milk</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_highlights_features">Product Features</string>
+    <string name="title_activity_dash_board">Dashboard</string>
+    <string name="title_activity_password_reset">Reset Password</string>
+    <string name="title_activity_about_us">About Us</string>
+    <string name="title_activity_forgot_password">Forgot Password</string>
+    <string name="title_activity_register">Register</string>
+    <string name="title_activity_health_care">HealthCareActivity</string>
+    <string name="title_activity_breeding">Breeding</string>
+    <string name="title_activity_income">Income</string>
+    <string name="title_activity_master_settings">Master Settings</string>
+    <string name="title_activity_feed">Feed</string>
+    <string name="title_activity_expense">Expense</string>
+    <string name="title_activity_add">GOATDIARY</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_about_us">About Us</string>
+    <string name="action_terms_and_cond">Terms and Conditions</string>
+    <string name="company_name">Aarush Systems</string>
+    <string name="press_to_continue">Continue</string>
+    <string name="home">Home</string>
+    <string name="product_features">Product\nFeatures</string>
+    <string name="user_manual">User\nManual</string>
+    <string name="link_social">Facebook</string>
+    <string name="contact_us">Contact\nUs</string>
+    <string name="email">Email</string>
+    <string name="next">Next</string>
+    <string name="signup">Sign Up</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="name">Name</string>
+    <string name="pin">PIN</string>
+    <string name="c_pin">Confirm PIN</string>
+    <string name="phone">Phone</string>
+    <string name="checkbox_register_text"><![CDATA[I accept Terms & Conditions and Privacy Policy]]></string>
+    <string name="proceed_to_payment">Proceed to Payment</string>
+    <string name="city">City</string>
+    <string name="country">Country</string>
+    <string name="forgot_password_message">We will send 4 digit code to above Email.</string>
+    <string name="enter_code">Enter Code</string>
+    <string name="show_hint">Show Hint</string>
+    <string name="confirm_details">Confirm Details</string>
+    <string name="paypal">PayPal</string>
+    <string name="paytm">PayTm</string>
+    <string name="choose_payment_method">Choose Payment Method</string>
+    <string name="contact_us_raw">Contact Us</string>
+    <string name="add">Add</string>
+    <string name="delete">Delete</string>
+    <string name="healthcare">Health Care</string>
+    <string name="weight">Weight</string>
+    <string name="food_plan">Food Plan</string>
+    <string name="breeding">Breeding</string>
+    <string name="expense">Expense</string>
+    <string name="income">Income</string>
+    <string name="reports">Reports</string>
+    <string name="goat_milk">Goat Milk</string>
+    <string name="master_setting">Master Setting</string>
+    <string name="logout">Logout</string>
+    <string name="loading">Loading...</string>
+    <string name="send">Send</string>
+    <string name="verify">Verify</string>
+    <string name="resend">Resend</string>
+    <string name="vaccination">Vaccination</string>
+    <string name="proposed_date">Proposed Dt</string>
+    <string name="vaccine">Vaccine</string>
+    <string name="dose">Dose</string>
+    <string name="booster">Booster</string>
+    <string name="sr_no">Sr no.</string>
+    <string name="booster_vaccination_reminder_list">Booster/Vaccination Reminder List</string>
+    <string name="info">Info</string>
+    <string name="male_id">Male Id</string>
+    <string name="female_id">Female Id</string>
+    <string name="age">Age</string>
+    <string name="mating">Mating</string>
+    <string name="confirmation">Confirmation</string>
+    <string name="delivery">Delivery</string>
+    <string name="abortion">Abortion</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="submit">Submit</string>
+    <string name="add_animal">Add Animal</string>
+    <string name="cash">Cash</string>
+    <string name="cheque">Cheque</string>
+    <string name="amount">Amount</string>
+    <string name="paid_to">Paid To</string>
+    <string name="cheque_no">Cheque No</string>
+    <string name="bank">Bank</string>
+    <string name="received_from">Received From</string>
+    <string name="clear">Clear</string>
+    <string name="masters">Masters</string>
+    <string name="go">Go</string>
+    <string name="select">Select</string>
+    <string name="enter_new_value">Enter New Value</string>
+    <string name="record_no">Record no.</string>
+    <string name="field_value">Field Value</string>
+    <string name="milk">Milk</string>
+    <string name="farm">Farm</string>
+    <string name="individual">Individual</string>
+    <string name="time">Time</string>
+    <string name="quantity">Quantity</string>
+    <string name="action">Action</string>
+    <string name="feed_type">Feed Type</string>
+    <string name="tag_id">Tag Id</string>
+    <string name="animal_type">Animal Type</string>
+    <string name="aquisation">Aquisation</string>
+    <string name="breed">BREED</string>
+    <string name="purpose">PURPOSE</string>
+    <string name="gender">Gender</string>
+    <string name="female">Female</string>
+    <string name="pregnant">Pregnant</string>
+    <string name="non_pregnant">Non Pregnant</string>
+    <string name="date">Date</string>
+    <string name="mother_id">Mother Id</string>
+    <string name="price">Price</string>
+    <string name="prev">Prev</string>
+    <string name="save">Save</string>
+    <string name="title_activity_delete">Delete</string>
+    <string name="delete_animal">Delete Animal</string>
+    <string name="release">Release</string>
+    <string name="remarks">Remarks</string>
+    <string name="male">Male</string>
+    <string name="title_activity_weight">WeightActivity</string>
+    <string name="select_duration">Select Duration</string>
+    <string name="stillborn">Stillborn</string>
+    <string name="male_child">Male Child</string>
+    <string name="female_child">Female Child</string>
+    <string name="details">Details</string>
+    <string name="sending_email">Sending Email...</string>
+    <string name="email_sent_success">Email Sent Successfully</string>
+    <string name="email_sent_failure">Email Sending Failed!</string>
+    <string name="user_email_absent">Account with this Email does not exist.</string>
+    <string name="okay">Okay</string>
+    <string name="register">Register</string>
+    <string name="confirm_details_message">Please confirm your details :</string>
+    <string name="yes">I Confirm</string>
+    <string name="no">Go Back</string>
+    <string name="hint_details">4 - Digit Number\neg. 1234, 1357</string>
+    <string name="about_us_details">
+        <![CDATA[
+            Greetings from <b><font color="#1F91E8">Aarush Systems</font></b>.<br><br>
+            Founded in 2012 by highly experienced and expert IT software professionals
+            with more than 3 decades of technical and project management expertise,
+            Innovation and R&D are amongst the key focal points for Aarush Systems.
+            We have been dedicated to improving every aspect of the technical experience for users all around the world.
+        ]]>
+    </string>
+    <string name="about_us_details2">
+        <![CDATA[
+             Please visit <a href="www.aarushsystems.in">www.aarushsystems.com</a> or <a href="www.goatmate.in">www.Goatmate.in</a> for more details.
+        ]]>
+    </string>
+    <string name="contact_us_details">
+        <![CDATA[
+            102, Varija Apartments, <br>
+            Fatehlal Marg, Off Law College Road, Erandwane <br>
+            Pune -411004 Maharashtra India <br>
+            Cell / Whatsapp no +91- 9822400825 <br><br>
+            Email:<br><a href="mailto:collegecoder8@gmail.com.au">director@aarushsystems.com</a><br>
+            Website:<br><a href="www.goatmate.in">www.goatmate.in</a>
+        ]]>
+    </string>
+    <string name="product_features_detail">
+        <![CDATA[
+            <font color=\'#1F91E8\'>GoatDiary Android App</font> is designed as a Mobile app to keep your live stock records up to date and provide basic management reports. It is very straightforward to operate and is ideal for farm managers looking to move up from manual records to computerization. Detailed individual animal records covering all aspects in farm management are covered in this software.
+        ]]>
+    </string>
+    <string name="product_features_details2">
+        <![CDATA[
+            Please find below some of the Features / highlights of this product.<br>
+                1) <font color=\'#1F91E8\'>Stock Reports</font> – At a Glance find out complete details about your stock. – Birth / Death / Purchase / Sales Records.<br>
+                2) <font color=\'#1F91E8\'>Weight Analysis</font> – Maintain Weight records for each animal<br>
+                3) <font color=\'#1F91E8\'>Health Records</font> – Maintain illness, treatment given to each animal<br>
+                4) <font color=\'#1F91E8\'>Milk Records</font> – Maintain daily milk production records<br>
+                5) <font color=\'#1F91E8\'>Breeding Record</font> – Maintain complete family history and mating details<br>
+                6) <font color=\'#1F91E8\'>Feed Record</font> – Maintain daily consumption of feed per animal<br>
+                7) <font color=\'#1F91E8\'>Vaccination Record</font> - Maintain Vaccination / Illness, Treatment given to each Animal.<br>
+                8) <font color=\'#1F91E8\'>Accounts</font> - Maintain detailed records about income earned and expenses incurred on farm.<br>
+                9) <font color=\'#1F91E8\'>Master Setting</font> – Facility for User to add variables on the job.<br>
+                10) <font color=\'#1F91E8\'>Reports</font> – All reports related to day to day operation are available in easy to read and interpret formats<br>
+                11) <font color=\'#1F91E8\'>Multilingual</font> – The app is available is different languages for e.g. English, Hindi, Marathi etc.
+        ]]>
+    </string>
+    <string name="payment_mode">Payment Mode</string>
+    <string name="lot">Lot</string>
+    <string name="unknown">Unknown</string>
+    <string-array name="masters_table_names">
+        <item>SELECT</item>
+        <item>Animal Type</item>
+        <item>Aquisation</item>
+        <item>Breed</item>
+        <item>Purpose</item>
+        <item>Release</item>
+        <item>Vaccine</item>
+        <item>Expense</item>
+        <item>Income</item>
+        <item>Feed Type</item>
+    </string-array>
+    <string-array name="data_table_names">
+        <item>SELECT</item>
+        <item>Vaccination</item>
+        <item>Weight</item>
+        <item>Breeding</item>
+        <item>Expense</item>
+        <item>Income</item>
+        <item>Feed</item>
+        <item>Milk</item>
+    </string-array>
+    <string-array name="languages">
+        <item>Change Language</item>
+        <item>English</item>
+        <item>Hindi</item>
+        <item>Marathi</item>
+    </string-array>
+    <string-array name="m1">
+        <item>GOAT</item>
+        <item>SHEEP</item>
+    </string-array>
+    <string-array name="m2">
+        <item>BY PURCHASE</item>
+        <item>BY BIRTH</item>
+    </string-array>
+    <string-array name="m3">
+        <item>OSMANABADI</item>
+        <item>SIROHI</item>
+        <item>BOER</item>
+        <item>MADGYAL</item>
+        <item>TALICHERI</item>
+    </string-array>
+    <string-array name="m4">
+        <item>FOR BREEDING</item>
+        <item>FOR SALE</item>
+        <item>FOR EID</item>
+    </string-array>
+    <string-array name="m5">
+        <item>BY SALE</item>
+        <item>BY DEATH</item>
+        <item>BY CULLING</item>
+    </string-array>
+    <string-array name="m6">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>6</item>
+        <item>9</item>
+        <item>12</item>
+    </string-array>
+    <string-array name="m7">
+        <item>SELECT</item>
+        <item>PPR</item>
+        <item>ETV</item>
+    </string-array>
+    <string-array name="m13">
+        <item>SELECT</item>
+        <item>PRODUCTION</item>
+        <item>SALES</item>
+    </string-array>
+    <string-array name="time_array">
+        <item>SELECT</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+    </string-array>
+    <string-array name="m9">
+        <item>SHED</item>
+        <item>ELECTRICITY</item>
+        <item>LABOUR</item>
+        <item>TELEPHONE</item>
+        <item>ANIMAL PURCHASE</item>
+        <item>WATER</item>
+    </string-array>
+    <string-array name="m10">
+        <item>ANIMAL SALE</item>
+        <item>MILK SALE</item>
+        <item>FODDER SALE</item>
+        <item>MANURE SALE</item>
+    </string-array>
+    <string-array name="masters_main_operation">
+        <item>SELECT OPERATION</item>
+        <item>ADD</item>
+        <item>DELETE</item>
+        <item>BACK-UP</item>
+        <item>RESTORE</item>
+    </string-array>
+    <string-array name="masters_add_edit">
+        <item>SELECT OPERATION</item>
+        <item>ADD</item>
+        <item>EDIT</item>
+    </string-array>
+    <string-array name="numbers0to10">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+    <string name="title_activity_report_livestock">Livestock</string>
+    <string name="filter">Filter</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="detail">Detail</string>
+    <string name="summary">Summary</string>
+    <string name="set">Set</string>
+    <string name="cancel">Cancel</string>
+    <string name="title_activity_reports_menu">Reports</string>
+    <string name="livestock">Livestock</string>
+    <string name="weight_report">Weight Report</string>
+    <string name="livestock_report">Livestock Report</string>
+    <string name="vaccination_report">Vaccination Report</string>
+    <string name="breeding_report">Breeding Report</string>
+    <string name="feed_stock_report">Feed Stock Report</string>
+    <string name="milk_report">Milk Report</string>
+    <string name="expense_report">Expense Report</string>
+    <string name="income_report">Income Report</string>
+    <string name="title_activity_report_weight">Weights</string>
+    <string name="title_activity_report_vaccination">Vaccination</string>
+    <string name="title_activity_report_breeding">Breeding</string>
+    <string name="title_activity_report_feed_stock">Feed Stock</string>
+    <string name="item">Item</string>
+    <string name="title_activity_report_expense">Expense</string>
+    <string name="title_activity_report_income">Income</string>
+    <string name="title_activity_report_milk">Milk</string>
+    <string name="action_export_to_excel">Export To Excel</string>
+    <string name="verify_email">Verify Email</string>
+    <string name="send_otp">Send OTP</string>
+    <string name="send_otp2">Send OTP2</string>
+    <string name="daily_report">Daily Report</string>
+    <string name="title_activity_report_daily">Daily</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="generate">Generate</string>
+</resources>

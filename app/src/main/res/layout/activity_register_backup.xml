@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".activity.RegisterActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar_RegisterActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_RegisterActivity"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:title="@string/title_activity_login" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_below="@+id/appbar_RegisterActivity"
+        android:layout_width="match_parent"
+        android:fillViewport="true"
+        android:layout_above="@+id/button_proceed_RegisterActivity"
+        android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+        android:id="@+id/linearLayout_name_RegisterActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:weightSum="1"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true">
+
+        <LinearLayout
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_weight="0.2"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/textView_name_RegisterActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/name"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textView_asterisk_RegisterActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text=" * "
+                android:textColor="@android:color/holo_red_dark" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/editText_name_RegisterActivity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:background="@drawable/outline_edittext_blue"
+            android:inputType="textPersonName|textCapWords"
+            android:padding="10dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout_email_RegisterActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:weightSum="1"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/linearLayout_name_RegisterActivity">
+
+        <LinearLayout
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="15dp"
+            android:gravity="center_vertical"
+            android:layout_weight="0.2"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textView_email_RegisterActivity"
+                android:layout_width="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:text="@string/email"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textView_asterisk2_RegisterActivity"
+                android:layout_width="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:text=" * "
+                android:textColor="@android:color/holo_red_dark" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/editText_email_RegisterActivity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:background="@drawable/outline_edittext_blue"
+            android:inputType="textEmailAddress"
+            android:padding="10dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout_password_RegisterActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:weightSum="1"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/linearLayout_email_RegisterActivity">
+
+        <LinearLayout
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="15dp"
+            android:gravity="center_vertical"
+            android:layout_weight="0.2"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textView_password_RegisterActivity"
+                android:layout_width="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:text="@string/pin"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textView_asterisk3_RegisterActivity"
+                android:layout_width="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:text=" * "
+                android:textColor="@android:color/holo_red_dark" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/editText_password_RegisterActivity"
+            android:layout_width="0dp"
+            android:ems="10"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:background="@drawable/outline_edittext_blue"
+            android:inputType="textPassword"
+            android:padding="10dp" />
+
+    </LinearLayout>
+
+        <TextView
+            android:layout_below="@+id/linearLayout_password_RegisterActivity"
+            android:id="@+id/textView_show_hint_RegisterActivity"
+            android:layout_width="match_parent"
+            android:textColor="@color/button_blue"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:text="@string/show_hint"
+            android:textAlignment="textEnd"
+            android:layout_marginBottom="5dp"
+            android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayout_c_password_RegisterActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:weightSum="1"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/textView_show_hint_RegisterActivity">
+
+        <LinearLayout
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="15dp"
+            android:gravity="center_vertical"
+            android:layout_weight="0.1"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textView_c_password_RegisterActivity"
+                android:layout_width="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:text="@string/c_pin"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textView_asterisk4_RegisterActivity"
+                android:layout_width="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:text=" * "
+                android:textColor="@android:color/holo_red_dark" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/editText_c_password_RegisterActivity"
+            android:layout_width="0dp"
+            android:ems="10"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:background="@drawable/outline_edittext_blue"
+            android:inputType="textPassword"
+            android:padding="10dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout_phone_RegisterActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:weightSum="1"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/linearLayout_c_password_RegisterActivity">
+
+        <LinearLayout
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="15dp"
+            android:gravity="center_vertical"
+            android:layout_weight="0.1"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textView_phone_RegisterActivity"
+                android:layout_width="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:text="@string/phone"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textView_asterisk5_RegisterActivity"
+                android:layout_width="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:text=" * "
+                android:textColor="@android:color/holo_red_dark" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/editText_phone_RegisterActivity"
+            android:layout_width="0dp"
+            android:ems="10"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:background="@drawable/outline_edittext_blue"
+            android:inputType="phone"
+            android:padding="10dp" />
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout_city_RegisterActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:weightSum="1"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal"
+            android:layout_below="@+id/linearLayout_phone_RegisterActivity">
+
+            <TextView
+                android:id="@+id/textView_city_RegisterActivity"
+                android:layout_marginStart="15dp"
+                android:layout_weight="0.2"
+                android:layout_width="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:text="@string/city"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/editText_city_RegisterActivity"
+                android:layout_width="0dp"
+                android:ems="10"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8"
+                android:background="@drawable/outline_edittext_blue"
+                android:inputType="textCapWords"
+                android:padding="10dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout_country_RegisterActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal"
+            android:layout_below="@+id/linearLayout_city_RegisterActivity">
+
+            <TextView
+                android:id="@+id/textView_country_RegisterActivity"
+                android:layout_marginStart="15dp"
+                android:layout_weight="0.2"
+                android:layout_width="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:text="@string/country"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/editText_country_RegisterActivity"
+                android:layout_width="0dp"
+                android:ems="10"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8"
+                android:background="@drawable/outline_edittext_blue"
+                android:inputType="textCapWords"
+                android:padding="10dp" />
+
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/checkbox_terms_conditions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linearLayout_country_RegisterActivity"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:padding="5dp"
+            android:text="@string/checkbox_register_text"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/button_proceed_RegisterActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/button_blue"
+        android:text="@string/proceed_to_payment"
+        android:textColor="@android:color/white" />
+</RelativeLayout>
