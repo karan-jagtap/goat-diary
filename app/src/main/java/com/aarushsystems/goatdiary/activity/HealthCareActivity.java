@@ -492,6 +492,23 @@ public class HealthCareActivity extends AppCompatActivity {
             tagIdSpinner.setAdapter(arrayAdapter);
             loadDisplayBox(tagIdSpinner.getSelectedItem().toString());
         }
+
+        ArrayList<String> vaccineList = db.getDataForMastersTable(LocalDatabase.TABLE_VACCINE);
+        ArrayAdapter<String> arrayAdapterVaccine = new ArrayAdapter<>(
+                HealthCareActivity.this,
+                R.layout.layout_text_view_black,
+                vaccineList);
+        if (vaccineList.isEmpty()) {
+            Log.i("CUSTOM", "Tag id list is empty");
+            if (status != 1) {
+                dialogDateUtil.showMessage("No Record Found. Please Add one before you set up their Health Care.");
+            }
+            disableComponents();
+        } else {
+            //Log.i("CUSTOM", "Tag id list is not empty");
+            vaccineSpinner.setAdapter(arrayAdapterVaccine);
+            //loadDisplayBox(vaccineSpinner.getSelectedItem().toString());
+        }
         tagIdSpinner.setAdapter(arrayAdapter);
         vaccinationArrayList = db.getAllVaccinationsRecords();
         Collections.sort(vaccinationArrayList, Collections.<VaccinationModel>reverseOrder());
