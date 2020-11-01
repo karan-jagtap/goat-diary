@@ -1,9 +1,12 @@
 package com.aarushsystems.goatdiary.activity.reports;
 
+import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -33,7 +36,13 @@ import com.aarushsystems.goatdiary.model.reports.ReportLiveStockModel;
 import com.aarushsystems.goatdiary.model.reports.ReportVaccinationModel;
 import com.aarushsystems.goatdiary.model.reports.ReportWeightModel;
 import com.evrencoskun.tableview.TableView;
+import com.nabinbhandari.android.permissions.PermissionHandler;
+import com.nabinbhandari.android.permissions.Permissions;
+import com.opencsv.CSVWriter;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -59,6 +68,13 @@ public class ReportDailyActivity extends AppCompatActivity {
     private ArrayList<ReportVaccinationModel> vaccList;
     private ArrayList<ReportExpenseModel> expenseList;
     private ArrayList<ReportIncomeModel> incomeList;
+    private ArrayList<String[]> addSummaryExcelList;
+    private ArrayList<String[]> deleteSummaryExcelList;
+    private ArrayList<String[]> weightsExcelList;
+    private ArrayList<String[]> vaccinationExcelList;
+    private ArrayList<String[]> feedMilkExcelList;
+    private ArrayList<String[]> expenseExcelList;
+    private ArrayList<String[]> incomeExcelList;
 
     private List<RowHeader> rowHeaderList;
     private List<ColumnHeader> columnHeaderList;
@@ -192,6 +208,7 @@ public class ReportDailyActivity extends AppCompatActivity {
      * ADD SUMMARY TABLE
      **/
     private void loadAddSummaryTable() {
+        addSummaryExcelList = new ArrayList<>();
         addSummaryList = db.getReportDailyAddSummary(selectedDate);
         int totalQty = addSummaryList.size();
         if (!addSummaryList.isEmpty()) {
@@ -202,7 +219,6 @@ public class ReportDailyActivity extends AppCompatActivity {
             columnHeaderList.add(new ColumnHeader("Breed"));
             columnHeaderList.add(new ColumnHeader("Action"));
             columnHeaderList.add(new ColumnHeader("Qty."));
-
             ArrayList<ReportLiveStockModel> finalList = new ArrayList<>();
             for (int i = 0; i < addSummaryList.size(); i++) {
                 ReportLiveStockModel outer = addSummaryList.get(i);
@@ -230,6 +246,7 @@ public class ReportDailyActivity extends AppCompatActivity {
                 }
             }
             int rowCount = 0;
+            addSummaryExcelList.add(new String[]{"Sr no.", "Animal Type", "Breed", "Action", "Qty."});
             for (ReportLiveStockModel model : finalList) {
                 List<Cell> cell = new ArrayList<>();
                 rowHeaderList.add(new RowHeader(String.valueOf(++rowCount)));
@@ -238,6 +255,12 @@ public class ReportDailyActivity extends AppCompatActivity {
                 cell.add(new Cell(model.getAction()));
                 cell.add(new Cell(String.valueOf(model.getMaleCount())));
                 cellDataList.add(cell);
+                addSummaryExcelList.add(new String[]{String.valueOf(rowCount),
+                        model.getAnimalType(),
+                        model.getBreed(),
+                        model.getAction(),
+                        String.valueOf(model.getMaleCount())
+                });
             }
             loadAdapter(addTable);
             addTable.setVisibility(View.VISIBLE);
@@ -246,12 +269,15 @@ public class ReportDailyActivity extends AppCompatActivity {
         }
         String title = "A) Add Summary - " + totalQty + " animals";
         addTV.setText(title);
+        addSummaryExcelList.add(0, new String[]{title});
+        addSummaryExcelList.add(new String[]{});
     }
 
     /**
      * DELETE SUMMARY TABLE
      **/
     private void loadDeleteSummaryTable() {
+        deleteSummaryExcelList = new ArrayList<>();
         delSummaryList = db.getReportDailyDeleteSummary(selectedDate);
         int totalQty = delSummaryList.size();
         if (!delSummaryList.isEmpty()) {
@@ -290,6 +316,7 @@ public class ReportDailyActivity extends AppCompatActivity {
                 }
             }
             int rowCount = 0;
+            deleteSummaryExcelList.add(new String[]{"Sr no.", "Animal Type", "Breed", "Action", "Qty."});
             for (ReportLiveStockModel model : finalList) {
                 List<Cell> cell = new ArrayList<>();
                 rowHeaderList.add(new RowHeader(String.valueOf(++rowCount)));
@@ -298,6 +325,12 @@ public class ReportDailyActivity extends AppCompatActivity {
                 cell.add(new Cell(model.getAction()));
                 cell.add(new Cell(String.valueOf(model.getMaleCount())));
                 cellDataList.add(cell);
+                deleteSummaryExcelList.add(new String[]{String.valueOf(rowCount),
+                        model.getAnimalType(),
+                        model.getBreed(),
+                        model.getAction(),
+                        String.valueOf(model.getMaleCount())
+                });
             }
             loadAdapter(delTable);
             delTable.setVisibility(View.VISIBLE);
@@ -306,12 +339,15 @@ public class ReportDailyActivity extends AppCompatActivity {
         }
         String title = "B) Delete Summary - " + totalQty + " animals";
         delTV.setText(title);
+        deleteSummaryExcelList.add(0, new String[]{title});
+        deleteSummaryExcelList.add(new String[]{});
     }
 
     /**
      * WEIGHTS TABLE
      **/
     private void loadWeightsTable() {
+        weightsExcelList = new ArrayList<>();
         weightList = db.getReportDailyWeightDone(selectedDate);
         if (!weightList.isEmpty()) {
             columnHeaderList = new ArrayList<>();
@@ -323,6 +359,7 @@ public class ReportDailyActivity extends AppCompatActivity {
             columnHeaderList.add(new ColumnHeader("Weight"));
 
             int rowCount = 0;
+            weightsExcelList.add(new String[]{"Sr no.", "Animal Id", "Animal Type", "Breed", "Weight"});
             for (ReportWeightModel model : weightList) {
                 List<Cell> cell = new ArrayList<>();
                 rowHeaderList.add(new RowHeader(String.valueOf(++rowCount)));
@@ -331,6 +368,12 @@ public class ReportDailyActivity extends AppCompatActivity {
                 cell.add(new Cell(model.getBreed()));
                 cell.add(new Cell(String.valueOf(model.getWeight())));
                 cellDataList.add(cell);
+                weightsExcelList.add(new String[]{String.valueOf(rowCount),
+                        String.valueOf(model.getTagId()),
+                        model.getAnimalType(),
+                        model.getBreed(),
+                        String.valueOf(model.getWeight())
+                });
             }
             loadAdapter(weightTable);
             weightTable.setVisibility(View.VISIBLE);
@@ -339,12 +382,15 @@ public class ReportDailyActivity extends AppCompatActivity {
         }
         String title = "C) Weight Done - " + weightList.size() + " animals";
         weightTV.setText(title);
+        weightsExcelList.add(0, new String[]{title});
+        weightsExcelList.add(new String[]{});
     }
 
     /**
      * VACCINATION TABLE
      **/
     private void loadVaccinationTable() {
+        vaccinationExcelList = new ArrayList<>();
         vaccList = db.getReportDailyVaccinationDone(selectedDate);
         if (!vaccList.isEmpty()) {
             columnHeaderList = new ArrayList<>();
@@ -356,6 +402,7 @@ public class ReportDailyActivity extends AppCompatActivity {
             columnHeaderList.add(new ColumnHeader("Vaccine"));
 
             int rowCount = 0;
+            vaccinationExcelList.add(new String[]{"Sr no.", "Animal Id", "Animal Type", "Breed", "Vaccine"});
             for (ReportVaccinationModel model : vaccList) {
                 List<Cell> cell = new ArrayList<>();
                 rowHeaderList.add(new RowHeader(String.valueOf(++rowCount)));
@@ -364,6 +411,12 @@ public class ReportDailyActivity extends AppCompatActivity {
                 cell.add(new Cell(model.getBreedString()));
                 cell.add(new Cell(model.getVaccine()));
                 cellDataList.add(cell);
+                vaccinationExcelList.add(new String[]{String.valueOf(rowCount),
+                        String.valueOf(model.getTagId()),
+                        model.getAnimalTypeString(),
+                        model.getBreedString(),
+                        model.getVaccine()
+                });
             }
             loadAdapter(vaccTable);
             vaccTable.setVisibility(View.VISIBLE);
@@ -372,18 +425,30 @@ public class ReportDailyActivity extends AppCompatActivity {
         }
         String title = "D) Vaccination Done - " + vaccList.size() + " animals";
         vaccTV.setText(title);
+        vaccinationExcelList.add(0, new String[]{title});
+        vaccinationExcelList.add(new String[]{});
     }
 
     private void loadFeedStockAndMilkData() {
         HashMap<String, Float> hashMap = db.getReportDailyFeedStockAndMilk(selectedDate);
         feedTV.setText("E) Feed Stock :  Input - " + hashMap.get("feed_input") + " kg." + " Output - " + hashMap.get("feed_output") + " kg.");
         milkTV.setText("F) Milk :  Produced - " + hashMap.get("milk_input") + " lt." + " Sold - " + hashMap.get("milk_output") + " lt.");
+        feedMilkExcelList = new ArrayList<>();
+        feedMilkExcelList.add(new String[]{"E) Feed Stock"});
+        feedMilkExcelList.add(new String[]{"Input (kg)", "Output (kg)"});
+        feedMilkExcelList.add(new String[]{String.valueOf(hashMap.get("feed_input")), String.valueOf(hashMap.get("feed_output"))});
+        feedMilkExcelList.add(new String[]{});
+        feedMilkExcelList.add(new String[]{"F) Milk"});
+        feedMilkExcelList.add(new String[]{"Produced (lt.)", "Sold (lt.)"});
+        feedMilkExcelList.add(new String[]{String.valueOf(hashMap.get("milk_input")), String.valueOf(hashMap.get("milk_output"))});
+        feedMilkExcelList.add(new String[]{});
     }
 
     /**
      * EXPENSE TABLE
      **/
     private void loadExpenseTable() {
+        expenseExcelList = new ArrayList<>();
         float totalAmount = 0;
         expenseList = db.getReportDailyExpense(selectedDate);
         if (!expenseList.isEmpty()) {
@@ -396,6 +461,7 @@ public class ReportDailyActivity extends AppCompatActivity {
             columnHeaderList.add(new ColumnHeader("Paid To"));
 
             int rowCount = 0;
+            expenseExcelList.add(new String[]{"Sr no.", "Expense Head", "Amount", "Cash/Cheque", "Paid To"});
             for (ReportExpenseModel model : expenseList) {
                 totalAmount += model.getAmount();
                 List<Cell> cell = new ArrayList<>();
@@ -405,6 +471,13 @@ public class ReportDailyActivity extends AppCompatActivity {
                 cell.add(new Cell(model.getCashCheque()));
                 cell.add(new Cell(model.getPaidTo()));
                 cellDataList.add(cell);
+                expenseExcelList.add(new String[]{
+                        String.valueOf(rowCount),
+                        model.getHead(),
+                        String.valueOf(model.getAmount()),
+                        model.getCashCheque(),
+                        model.getPaidTo()
+                });
             }
             loadAdapter(expenseTable);
             expenseTable.setVisibility(View.VISIBLE);
@@ -413,12 +486,15 @@ public class ReportDailyActivity extends AppCompatActivity {
         }
         String title = "G) Expense Total - " + totalAmount + " Rs.";
         expenseTV.setText(title);
+        expenseExcelList.add(0,new String[]{title});
+        expenseExcelList.add(new String[]{});
     }
 
     /**
      * INCOME TABLE
      **/
     private void loadIncomeTable() {
+        incomeExcelList = new ArrayList<>();
         float totalAmount = 0;
         incomeList = db.getReportDailyIncome(selectedDate);
         if (!incomeList.isEmpty()) {
@@ -430,6 +506,7 @@ public class ReportDailyActivity extends AppCompatActivity {
             columnHeaderList.add(new ColumnHeader("Cash/Cheque"));
             columnHeaderList.add(new ColumnHeader("Received From"));
             int rowCount = 0;
+            incomeExcelList.add(new String[]{"Sr no.", "Income Head", "Amount", "Cash/Cheque", "Received From"});
             for (ReportIncomeModel model : incomeList) {
                 totalAmount += model.getAmount();
                 List<Cell> cell = new ArrayList<>();
@@ -439,8 +516,14 @@ public class ReportDailyActivity extends AppCompatActivity {
                 cell.add(new Cell(model.getCashCheque()));
                 cell.add(new Cell(model.getReceivedFrom()));
                 cellDataList.add(cell);
+                incomeExcelList.add(new String[]{
+                        String.valueOf(rowCount),
+                        model.getHead(),
+                        String.valueOf(model.getAmount()),
+                        model.getCashCheque(),
+                        model.getReceivedFrom()
+                });
             }
-
             loadAdapter(incomeTable);
             incomeTable.setVisibility(View.VISIBLE);
         } else {
@@ -448,6 +531,8 @@ public class ReportDailyActivity extends AppCompatActivity {
         }
         String title = "H) Income Total - " + totalAmount + " Rs.";
         incomeTV.setText(title);
+        incomeExcelList.add(0,new String[]{title});
+        incomeExcelList.add(new String[]{});
     }
 
     private void loadAdapter(TableView table) {
@@ -483,13 +568,21 @@ public class ReportDailyActivity extends AppCompatActivity {
         db = new LocalDatabase(ReportDailyActivity.this);
         progressDialog = new ProgressDialog(ReportDailyActivity.this);
         calendar = Calendar.getInstance();
-        ddF = String.valueOf((calendar.get(Calendar.DAY_OF_MONTH) - 1) < 10 ? "0" + (calendar.get(Calendar.DAY_OF_MONTH) - 1) : (calendar.get(Calendar.DAY_OF_MONTH) - 1));
+        ddF = String.valueOf((calendar.get(Calendar.DAY_OF_MONTH)) < 10 ? "0" + (calendar.get(Calendar.DAY_OF_MONTH)) : (calendar.get(Calendar.DAY_OF_MONTH)));
         mmF = String.valueOf((calendar.get(Calendar.MONTH) + 1) < 10 ? "0" + (calendar.get(Calendar.MONTH) + 1) : (calendar.get(Calendar.MONTH) + 1));
         yyyyF = String.valueOf(calendar.get(Calendar.YEAR));
         fddED.setText(ddF);
         fmmED.setText(mmF);
         fyyyyED.setText(yyyyF);
+        /**
+         * FOR TESTING ONLY
+         *
+         **/
+        ddF = "15";
+        mmF = "07";
+        yyyyF = "2020";
         selectedDate = ddF + "/" + mmF + "/" + yyyyF;
+        Toast.makeText(this, "" + selectedDate, Toast.LENGTH_SHORT).show();
         loadData();
     }
 
@@ -516,10 +609,81 @@ public class ReportDailyActivity extends AppCompatActivity {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(AppConfig.TERMS_AND_CONDITIONS));
                 startActivity(browserIntent);
             } catch (Exception e) {
-                Log.i("CUSTOM","e = "+e.getMessage());
+                Log.i("CUSTOM", "e = " + e.getMessage());
             }
+        }
+        if (id == R.id.action_export) {
+            Toast.makeText(ReportDailyActivity.this, "" + selectedDate, Toast.LENGTH_SHORT).show();
+            String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            String rationale = "Please provide Storage Permission to save all Reports on your device.\nThank You!";
+            Permissions.Options options = new Permissions.Options()
+                    .setRationaleDialogTitle("Info")
+                    .setSettingsDialogTitle("Warning");
+
+            Permissions.check(ReportDailyActivity.this/*context*/, permissions, rationale, options, new PermissionHandler() {
+                @Override
+                public void onGranted() {
+                    // do your task.
+                    String appDir = Environment.getExternalStorageDirectory().toString() + "/Goat Diary";
+                    File file = new File(appDir);
+                    if (!file.exists()) {
+                        if (file.mkdir()) {
+                            Log.i("CUSTOM", "folder created successfully");
+                            exportToCsv();
+                        } else {
+                            Log.i("CUSTOM", "failed");
+                        }
+                    } else {
+                        Log.i("CUSTOM", "exists");
+                        exportToCsv();
+                    }
+                }
+
+                @Override
+                public void onDenied(Context context, ArrayList<String> deniedPermissions) {
+                    DialogDateUtil dialogDateUtil = new DialogDateUtil(ReportDailyActivity.this);
+                    dialogDateUtil.showMessage("Reports cannot be generated.\nStorage Access needed.");
+                }
+            });
         }
         return super.onOptionsItemSelected(item);
     }
 
+    private void exportToCsv() {
+        File file = new File(Environment.getExternalStorageDirectory() + "/Goat Diary/Daily_Report_" + selectedDate.replace('/', '_') + ".csv");
+        FileWriter fileWriter = null;
+        CSVWriter csvWriter = null;
+        try {
+            fileWriter = new FileWriter(file);
+            csvWriter = new CSVWriter(fileWriter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            ArrayList<String[]> allCombined = new ArrayList<>();
+            allCombined.addAll(addSummaryExcelList);
+            allCombined.addAll(deleteSummaryExcelList);
+            allCombined.addAll(weightsExcelList);
+            allCombined.addAll(vaccinationExcelList);
+            allCombined.addAll(feedMilkExcelList);
+            allCombined.addAll(expenseExcelList);
+            allCombined.addAll(incomeExcelList);
+            Objects.requireNonNull(csvWriter).writeAll(allCombined);
+            dialogDateUtil.showMessage("Report Saved.\nLocation : " + file.getPath());
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.i("CUSTOM", "error = " + e.getMessage());
+        } finally {
+            try {
+                if (fileWriter != null) {
+                    fileWriter.close();
+                }
+                if (csvWriter != null) {
+                    csvWriter.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
