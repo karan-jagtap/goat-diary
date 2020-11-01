@@ -574,13 +574,6 @@ public class ReportDailyActivity extends AppCompatActivity {
         fddED.setText(ddF);
         fmmED.setText(mmF);
         fyyyyED.setText(yyyyF);
-        /**
-         * FOR TESTING ONLY
-         *
-         **/
-        ddF = "15";
-        mmF = "07";
-        yyyyF = "2020";
         selectedDate = ddF + "/" + mmF + "/" + yyyyF;
         Toast.makeText(this, "" + selectedDate, Toast.LENGTH_SHORT).show();
         loadData();
@@ -661,6 +654,9 @@ public class ReportDailyActivity extends AppCompatActivity {
         }
         try {
             ArrayList<String[]> allCombined = new ArrayList<>();
+            allCombined.add(new String[]{"Report Generation Date : "+selectedDate});
+            allCombined.add(new String[]{});
+            allCombined.add(new String[]{});
             allCombined.addAll(addSummaryExcelList);
             allCombined.addAll(deleteSummaryExcelList);
             allCombined.addAll(weightsExcelList);
