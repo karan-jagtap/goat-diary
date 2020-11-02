@@ -6,9 +6,12 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.util.Patterns;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -61,6 +64,9 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText nameED, emailED, passED, cpassED, phoneED, cityED, countryED, otpED, otp2ED;
     private String nameData, emailData, passData, cpassData, otpSent, otp2Sent, phoneData, cityData, countryData, imeiNo, custId, secureId;
 
+    private Handler handler;
+    private CountDownTimer timer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +87,14 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void sendOTPMail() {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                new DialogDateUtil(RegisterActivity.this, "Generating OTP and sending it to your email address.")
+                        .showMessage();
+            }
+        });
+        timer.start();
         Log.i("CUSTOM", "OTP : " + otpSent);
         Toast.makeText(this, "Sending OTP...", Toast.LENGTH_SHORT).show();
         RequestQueue requestQueue = Volley.newRequestQueue(RegisterActivity.this);
@@ -96,6 +110,7 @@ public class RegisterActivity extends AppCompatActivity {
                             if (!jsonObject.getBoolean("error")) {
                                 if (jsonObject.getString("message").equals("success")) {
                                     //messageTV.setText(getString(R.string.email_sent_success));
+                                    timer.onFinish();
                                     if (PLAY_STORE_APK) {
                                         new DialogDateUtil(RegisterActivity.this, "Please Check Your Email for OTP!")
                                                 .showMessage();
@@ -106,6 +121,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 } else {
                                     //messageTV.setText(getString(R.string.email_sent_failure));
                                     Log.i("CUSTOM", "ekse");
+                                    timer.onFinish();
                                 }
                             } else {
                                 Log.i("CUSTOM", "boolean = " + jsonObject.getString("message").equals("user_absent"));
@@ -113,12 +129,18 @@ public class RegisterActivity extends AppCompatActivity {
                                     //messageTV.setText(getString(R.string.user_email_absent));
                                     new DialogDateUtil(RegisterActivity.this, getString(R.string.user_email_absent))
                                             .showMessage();
+                                } else if (jsonObject.getBoolean("error")) {
+                                    new DialogDateUtil(RegisterActivity.this,
+                                            "Server Error...\nPlease try again after some time.")
+                                            .showMessage();
                                 }
+                                timer.onFinish();
                                 Log.i("CUSTOM", "php error = " + jsonObject.getString("message"));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.i("CUSTOM", "Catch = " + e.getMessage());
+                            timer.onFinish();
                         }
                     }
                 },
@@ -128,6 +150,7 @@ public class RegisterActivity extends AppCompatActivity {
                         error.printStackTrace();
                         new DialogDateUtil(RegisterActivity.this).showMessage("Something went wrong.\nPlease try again later.");
                         Log.i("CUSTOM", "Errorlistener = " + error.getMessage());
+                        timer.onFinish();
                     }
                 }
         ) {
@@ -165,7 +188,9 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!emailED.getText().toString().trim().isEmpty() && Patterns.EMAIL_ADDRESS.matcher(emailED.getText().toString().trim()).matches()) {
-                    sendOTPMail();
+                    if (!otpTV.getText().toString().contains("Retry")) {
+                        sendOTPMail();
+                    }
                 } else {
                     new DialogDateUtil(RegisterActivity.this, "Invalid Email Address!").showMessage();
                 }
@@ -403,7 +428,7 @@ public class RegisterActivity extends AppCompatActivity {
             new DialogDateUtil(RegisterActivity.this, "Please Accept the Terms & Conditions and Privacy Policy.").showMessage();
             return false;
         }
-        if(PLAY_STORE_APK) {
+        if (PLAY_STORE_APK) {
             if (!otpSent.equals(otpED.getText().toString().trim())) {
                 new DialogDateUtil(RegisterActivity.this, "Invalid OTP Entered.").showMessage();
                 return false;
@@ -412,10 +437,10 @@ public class RegisterActivity extends AppCompatActivity {
             if (!otpSent.equals(otpED.getText().toString().trim()) && !otp2Sent.equals(otp2ED.getText().toString().trim())) {
                 new DialogDateUtil(RegisterActivity.this, "Invalid OTPs Entered.").showMessage();
                 return false;
-            }else if (!otpSent.equals(otpED.getText().toString().trim())) {
+            } else if (!otpSent.equals(otpED.getText().toString().trim())) {
                 new DialogDateUtil(RegisterActivity.this, "Invalid OTP 1 Entered.").showMessage();
                 return false;
-            }else if (!otp2Sent.equals(otp2ED.getText().toString().trim())) {
+            } else if (!otp2Sent.equals(otp2ED.getText().toString().trim())) {
                 new DialogDateUtil(RegisterActivity.this, "Invalid OTP 2 Entered.").showMessage();
                 return false;
             }
@@ -468,6 +493,20 @@ public class RegisterActivity extends AppCompatActivity {
         }
         progressDialog = new ProgressDialog(RegisterActivity.this);
         sessionManager = new SessionManager(RegisterActivity.this);
+        handler = new Handler();
+        timer = new CountDownTimer(120000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                otpTV.setText("Retry in " + (millisUntilFinished / 1000) + "...");
+                otpTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            }
+
+            @Override
+            public void onFinish() {
+                otpTV.setText("Send OTPs");
+                otpTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+            }
+        };
         secureId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         if (secureId != null) {
             if (secureId.isEmpty()) {

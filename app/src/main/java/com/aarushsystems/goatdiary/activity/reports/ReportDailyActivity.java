@@ -415,8 +415,7 @@ public class ReportDailyActivity extends AppCompatActivity {
                         String.valueOf(model.getTagId()),
                         model.getAnimalTypeString(),
                         model.getBreedString(),
-                        model.getVaccine()
-                });
+                        model.getVaccine()});
             }
             loadAdapter(vaccTable);
             vaccTable.setVisibility(View.VISIBLE);
@@ -486,7 +485,7 @@ public class ReportDailyActivity extends AppCompatActivity {
         }
         String title = "G) Expense Total - " + totalAmount + " Rs.";
         expenseTV.setText(title);
-        expenseExcelList.add(0,new String[]{title});
+        expenseExcelList.add(0, new String[]{title});
         expenseExcelList.add(new String[]{});
     }
 
@@ -531,7 +530,7 @@ public class ReportDailyActivity extends AppCompatActivity {
         }
         String title = "H) Income Total - " + totalAmount + " Rs.";
         incomeTV.setText(title);
-        incomeExcelList.add(0,new String[]{title});
+        incomeExcelList.add(0, new String[]{title});
         incomeExcelList.add(new String[]{});
     }
 
@@ -654,7 +653,7 @@ public class ReportDailyActivity extends AppCompatActivity {
         }
         try {
             ArrayList<String[]> allCombined = new ArrayList<>();
-            allCombined.add(new String[]{"Report Generation Date : "+selectedDate});
+            allCombined.add(new String[]{"Report Generation Date : " + selectedDate});
             allCombined.add(new String[]{});
             allCombined.add(new String[]{});
             allCombined.addAll(addSummaryExcelList);
