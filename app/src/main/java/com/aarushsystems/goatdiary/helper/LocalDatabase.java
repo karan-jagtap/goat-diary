@@ -906,6 +906,19 @@ public class LocalDatabase extends SQLiteOpenHelper {
         return list;
     }
 
+    public ArrayList<String> getAllDeletedTagIds() {
+        ArrayList<String> list = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        String selectQuery = "SELECT " + KEY_TAG_ID + " FROM " + TABLE_ANIMAL_DETAILS + " WHERE " + KEY_DELETED + "=1";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        while (cursor.moveToNext()) {
+            list.add(String.valueOf(cursor.getInt(0)));
+        }
+        cursor.close();
+        db.close();
+        return list;
+    }
+
     public void deleteTableUsers() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_USERS);
@@ -1008,7 +1021,7 @@ public class LocalDatabase extends SQLiteOpenHelper {
         return arrayList;
     }
 
-    public HashMap<String, String> userDeleteAnimalDetails(AddAnimalModel model) {
+    public HashMap<String, String> userDeleteAnimalDetails(AddAnimalModel model, boolean flag) {
         SQLiteDatabase db = getWritableDatabase();
         HashMap<String, String> response = new HashMap<>();
         ContentValues cv = new ContentValues();
@@ -1023,6 +1036,9 @@ public class LocalDatabase extends SQLiteOpenHelper {
         db.close();
         db = getReadableDatabase();
         String selectQuery = "SELECT * FROM " + TABLE_ANIMAL_DETAILS + " WHERE " + KEY_TAG_ID + "=" + model.getTagId() + " AND " + KEY_DELETED + "=1";
+        if (!flag) {
+            selectQuery = "SELECT * FROM " + TABLE_ANIMAL_DETAILS + " WHERE " + KEY_TAG_ID + "=" + model.getTagId() + " AND " + KEY_DELETED + "=0";
+        }
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.getCount() == 1) {
             response.put("error", "0");
@@ -1843,14 +1859,38 @@ public class LocalDatabase extends SQLiteOpenHelper {
         return arrayList;
     }
 
-    public String getSingleRecordBySrNo(String tableName, int srno) {
+    public String getSingleRecordBySrNo(String tableName, int srno, boolean flag) {
         String data = "";
         SQLiteDatabase db = getReadableDatabase();
-        String selectQuery = "SELECT * FROM " + tableName + " WHERE " + KEY_SR_NO + "=" + srno;
+        String selectQuery = "";
+        if (flag) {
+            selectQuery = "SELECT * FROM " + tableName + " WHERE " + KEY_SR_NO + "=" + srno;
+        } else {
+            selectQuery = "SELECT * FROM " + tableName + " WHERE " + KEY_TAG_ID + "=" + srno;
+        }
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.getCount() == 1) {
             cursor.moveToFirst();
             switch (tableName) {
+                case TABLE_ANIMAL_DETAILS: {
+                    data = context.getString(R.string.record_no) + " : " + cursor.getInt(0) + "\n" +
+                            context.getString(R.string.tag_id) + " : " + cursor.getInt(1) + "\n" +
+                            context.getString(R.string.animal_type) + " : " + getFieldBySrNo(cursor.getInt(2), TABLE_ANIMAL_TYPE) + "\n" +
+                            context.getString(R.string.aquisation) + " : " + getFieldBySrNo(cursor.getInt(3), TABLE_AQUISATION) + "\n" +
+                            context.getString(R.string.gender) + " : " + cursor.getString(4) + "\n" +
+                            context.getString(R.string.breed) + " : " + getBreedBySrNoAndAnimalType(cursor.getInt(5), cursor.getInt(2)) + "\n" +
+                            context.getString(R.string.add) + " Date : " + cursor.getString(6) + "\n" +
+                            context.getString(R.string.weight) + " : " + cursor.getString(7) + "\n" +
+                            context.getString(R.string.purpose) + " : " + getFieldBySrNo(cursor.getInt(8), TABLE_PURPOSE) + "\n" +
+                            (cursor.getString(9) != null ? (context.getString(R.string.mother_id) + " : " + cursor.getString(9) + "\n") : "") +
+                            context.getString(R.string.price) + " : " + cursor.getString(10) + "\n" +
+                            context.getString(R.string.release) + " : " + getFieldBySrNo(cursor.getInt(11), TABLE_RELEASE) + "\n" +
+                            context.getString(R.string.delete) + " Date : " + cursor.getString(12) + "\n" +
+                            "Release " + context.getString(R.string.price) + " : " + cursor.getString(13) + "\n" +
+                            "Release " + context.getString(R.string.weight) + " : " + cursor.getString(14) + "\n" +
+                            context.getString(R.string.remarks) + " : " + cursor.getString(15);
+                    return data;
+                }
                 case TABLE_ANIMAL_EXPENSE: {
                     data = context.getString(R.string.record_no) + " : " + cursor.getInt(0) + "\n" +
                             context.getString(R.string.action) + " : " + getFieldBySrNo(cursor.getInt(1), TABLE_EXPENSE) + "\n" +

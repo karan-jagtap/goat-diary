@@ -32,6 +32,7 @@ import com.aarushsystems.goatdiary.helper.AppConfig;
 import com.aarushsystems.goatdiary.helper.DialogDateUtil;
 import com.aarushsystems.goatdiary.helper.LocalDatabase;
 import com.aarushsystems.goatdiary.helper.SessionManager;
+import com.aarushsystems.goatdiary.model.AddAnimalModel;
 import com.aarushsystems.goatdiary.model.GenericModel;
 import com.nabinbhandari.android.permissions.PermissionHandler;
 import com.nabinbhandari.android.permissions.Permissions;
@@ -130,21 +131,46 @@ public class MasterSettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (recordSpinner.getSelectedItemPosition() != 0) {
-                    HashMap<String, String> map = db.deleteSingleRecord(Integer.parseInt(recordSpinner.getSelectedItem().toString()), delTableName);
-                    if (map.get("error").equals("0")) {
-                        dialogDateUtil.showMessage("Record Deleted.");
-                        //delDisplayTV.setVisibility(View.GONE);
-                        ArrayList<String> al = db.getAllSrNosByTable(delTableName);
-                        al.add(0, "SELECT");
-                        if (al.size() == 1) {
-                            dialogDateUtil.showMessage("No Record Found.");
+                    if (delSpinner.getSelectedItemPosition() < 8) {
+                        HashMap<String, String> map = db.deleteSingleRecord(Integer.parseInt(recordSpinner.getSelectedItem().toString()), delTableName);
+                        if (map.get("error").equals("0")) {
+                            dialogDateUtil.showMessage("Record Deleted.");
+                            //delDisplayTV.setVisibility(View.GONE);
+                            ArrayList<String> al = db.getAllSrNosByTable(delTableName);
+                            al.add(0, "SELECT");
+                            if (al.size() == 1) {
+                                dialogDateUtil.showMessage("No Record Found.");
+                            }
+                            ArrayAdapter<String> aa = new ArrayAdapter<>(MasterSettingsActivity.this,
+                                    R.layout.layout_text_view_black, al);
+                            recordSpinner.setAdapter(aa);
+                            delSpinner.setSelection(0);
+                        } else {
+                            dialogDateUtil.showMessage("Local Database Error.");
                         }
-                        ArrayAdapter<String> aa = new ArrayAdapter<>(MasterSettingsActivity.this,
-                                R.layout.layout_text_view_black, al);
-                        recordSpinner.setAdapter(aa);
-                        delSpinner.setSelection(0);
-                    } else {
-                        dialogDateUtil.showMessage("Local Database Error.");
+                    } else if (delSpinner.getSelectedItemPosition() == 8) {
+
+                    } else if (delSpinner.getSelectedItemPosition() == 9) {
+                        AddAnimalModel model = new AddAnimalModel();
+                        model.setTagId(Integer.parseInt(recordSpinner.getSelectedItem().toString()));
+                        model.setDeleted(0);
+                        //false for reversing delete operation
+                        HashMap<String, String> map = db.userDeleteAnimalDetails(model, false);
+                        if (map.get("error").equals("0")) {
+                            dialogDateUtil.showMessage("Record Deleted.");
+                            //delDisplayTV.setVisibility(View.GONE);
+                            ArrayList<String> al = db.getAllDeletedTagIds();
+                            al.add(0, "SELECT");
+                            if (al.size() == 1) {
+                                dialogDateUtil.showMessage("No Record Found.");
+                            }
+                            ArrayAdapter<String> aa = new ArrayAdapter<>(MasterSettingsActivity.this,
+                                    R.layout.layout_text_view_black, al);
+                            recordSpinner.setAdapter(aa);
+                            delSpinner.setSelection(0);
+                        } else {
+                            dialogDateUtil.showMessage("Local Database Error.");
+                        }
                     }
                 } else {
                     dialogDateUtil.showMessage("No Record Selected.");
@@ -162,9 +188,16 @@ public class MasterSettingsActivity extends AppCompatActivity {
                 } else {
                     getDelTableName();
                     delDisplayTV.setVisibility(View.VISIBLE);
-                    //button too
-                    //loadDeleteLayout();
-                    ArrayList<String> al = db.getAllSrNosByTable(delTableName);
+                    ArrayList<String> al = new ArrayList<>();
+                    if (delTableName.equals(LocalDatabase.TABLE_ANIMAL_DETAILS)) {
+                        if (i == 8) {
+                            al = db.getAllNonDeletedTagIds();
+                        } else if (i == 9) {
+                            al = db.getAllDeletedTagIds();
+                        }
+                    } else {
+                        al = db.getAllSrNosByTable(delTableName);
+                    }
                     al.add(0, "SELECT");
                     if (al.size() == 1) {
                         dialogDateUtil.showMessage("No Record Found.");
@@ -684,7 +717,19 @@ public class MasterSettingsActivity extends AppCompatActivity {
     }
 
     private void loadDeleteLayout() {
-        String data = db.getSingleRecordBySrNo(delTableName, Integer.parseInt(recordSpinner.getSelectedItem().toString()));
+        String data = "";
+        if (delSpinner.getSelectedItemPosition() < 8) {
+            //true for srno
+            data = db.getSingleRecordBySrNo(delTableName, Integer.parseInt(recordSpinner.getSelectedItem().toString()), true);
+        } else if (delSpinner.getSelectedItemPosition() == 8 || delSpinner.getSelectedItemPosition() == 9) {
+            //false for tagid
+            data = db.getSingleRecordBySrNo(delTableName, Integer.parseInt(recordSpinner.getSelectedItem().toString()), false);
+            data = data.replace("null", "NA");
+            data = data.replace(": \n", ": NA\n");
+            if(data.trim().lastIndexOf(":") == data.length()-1){
+                data=data.replace(": ",": NA");
+            }
+        }
         delDisplayTV.setText(data);
     }
 
@@ -779,6 +824,10 @@ public class MasterSettingsActivity extends AppCompatActivity {
                 break;
             case 7:
                 delTableName = LocalDatabase.TABLE_ANIMAL_MILK;
+                break;
+            case 8:
+            case 9:
+                delTableName = LocalDatabase.TABLE_ANIMAL_DETAILS;
                 break;
         }
     }

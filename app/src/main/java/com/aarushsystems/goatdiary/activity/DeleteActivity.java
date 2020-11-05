@@ -298,7 +298,8 @@ public class DeleteActivity extends AppCompatActivity {
     }
 
     private void updateDetailsToLocalDatabase() {
-        HashMap<String, String> response = db.userDeleteAnimalDetails(addAnimalModel);
+        // true for real deletion
+        HashMap<String, String> response = db.userDeleteAnimalDetails(addAnimalModel,true);
         if (Objects.equals(response.get("error"), "0")) {
             dialogDateUtil.showMessage("Animal Deleted Successfully!");
             count = 0;

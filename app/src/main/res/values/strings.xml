@@ -207,6 +207,8 @@
         <item>Income</item>
         <item>Feed</item>
         <item>Milk</item>
+        <item>Add Animal</item>
+        <item>Delete Animal</item>
     </string-array>
     <string-array name="languages">
         <item>Change Language</item>
