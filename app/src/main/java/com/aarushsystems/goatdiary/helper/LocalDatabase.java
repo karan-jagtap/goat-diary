@@ -3368,4 +3368,21 @@ public class LocalDatabase extends SQLiteOpenHelper {
         return hashMap;
     }
 
+    public boolean deleteAnimalPermanently(String tagId) {
+        SQLiteDatabase db = getWritableDatabase();
+        int status = db.delete(TABLE_ANIMAL_DETAILS, KEY_TAG_ID + "= ?", new String[]{tagId});
+        Log.i("CUSTOM", "animal details = " + status);
+        status = db.delete(TABLE_ANIMAL_BREEDING, KEY_MALE_ID + "= ? OR " + KEY_FEMALE_ID + "= ?",
+                new String[]{tagId, tagId});
+        Log.i("CUSTOM", "breeding = " + status);
+        status = db.delete(TABLE_ANIMAL_MILK, KEY_TAG_ID + "= ?", new String[]{tagId});
+        Log.i("CUSTOM", "milk = " + status);
+        status = db.delete(TABLE_ANIMAL_VACCINATION, KEY_TAG_ID + "= ?", new String[]{tagId});
+        Log.i("CUSTOM", "vacccination = " + status);
+        status = db.delete(TABLE_ANIMAL_WEIGHTS, KEY_TAG_ID + "= ?", new String[]{tagId});
+        Log.i("CUSTOM", "weight = " + status);
+        db.close();
+        return true;
+    }
+
 }

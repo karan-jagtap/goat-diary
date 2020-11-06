@@ -149,7 +149,21 @@ public class MasterSettingsActivity extends AppCompatActivity {
                             dialogDateUtil.showMessage("Local Database Error.");
                         }
                     } else if (delSpinner.getSelectedItemPosition() == 8) {
-
+                        if(db.deleteAnimalPermanently(recordSpinner.getSelectedItem().toString())){
+                            dialogDateUtil.showMessage("Record Deleted.");
+                            //delDisplayTV.setVisibility(View.GONE);
+                            ArrayList<String> al = db.getAllNonDeletedTagIds();
+                            al.add(0, "SELECT");
+                            if (al.size() == 1) {
+                                dialogDateUtil.showMessage("No Record Found.");
+                            }
+                            ArrayAdapter<String> aa = new ArrayAdapter<>(MasterSettingsActivity.this,
+                                    R.layout.layout_text_view_black, al);
+                            recordSpinner.setAdapter(aa);
+                            delSpinner.setSelection(0);
+                        }else {
+                            dialogDateUtil.showMessage("Local Database Error.");
+                        }
                     } else if (delSpinner.getSelectedItemPosition() == 9) {
                         AddAnimalModel model = new AddAnimalModel();
                         model.setTagId(Integer.parseInt(recordSpinner.getSelectedItem().toString()));
