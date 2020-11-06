@@ -18,8 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -35,84 +35,37 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class DeleteActivity extends AppCompatActivity {
+public class DeleteEditActivity extends AppCompatActivity {
 
-    private int count = 0;
-    private boolean justPrev, justNext;
     private LocalDatabase db;
     private ScrollView scrollView;
     private AddAnimalModel addAnimalModel;
-    private ArrayList<AddAnimalModel> deletedArrayList;
     private DialogDateUtil dialogDateUtil;
-    private Spinner tagIdSpinner, releaseSpinner;
-    private TextView totalAnimalsCountTV, deletedAnimalsCountTV, editTV, prevTV, saveTV, priceLine, weightLine, animalTypeTV, breedTV, genderTV, dateTV, weightTV;
+    private Spinner  releaseSpinner;
+    private TextView cancelTV, saveTV, priceLine, weightLine, animalTypeTV, breedTV, genderTV, dateTV, weightTV;
     private LinearLayout weightLayout, priceLayout;
-    private EditText ddED, mmED, yyyyED, wtkgED, wtgmED, priceED, remarksED;
+    private EditText ddED, mmED, yyyyED, wtkgED, wtgmED, priceED, remarksED, tagIdED;
+    private String tagId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_delete);
-        Toolbar toolbar = findViewById(R.id.toolbar_DeleteActivity);
+        setContentView(R.layout.activity_delete_edit);
+        Toolbar toolbar = findViewById(R.id.toolbar_DeleteEditActivity);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        if (getIntent().getStringExtra("tag_id") != null) {
+            tagId = getIntent().getStringExtra("tag_id");
+        } else {
+            finish();
+        }
 
         declarations();
         listeners();
     }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        Log.i("CUSTOM", "onStart ==> " + count);
-//        for (int i = 0; i < deletedArrayList.size(); i++) {
-//            AddAnimalModel m = deletedArrayList.get(i);
-//            Log.i("CUSTOM", "---------- " + m.getTagId() + " = " + i);
-//        }
-//        if (deletedArrayList.size() > 1) {
-//            if (count == 0) {
-//                count = 1;
-//            }
-//            Log.i("CUSTOM", "Replacing item...");
-//            deletedArrayList.set(count - 1, db.getDetailsForDeletedTagID(String.valueOf(deletedArrayList.get(count - 1).getTagId())));
-//            loadPreviousContent(count - 1);
-//        } else {
-//            deletedArrayList.set(0, db.getDetailsForDeletedTagID(String.valueOf(deletedArrayList.get(0).getTagId())));
-//        }
-//    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 38974 && resultCode == RESULT_OK) {
-            Log.i("CUSTOM","inside");
-            if (deletedArrayList.size() > 1) {
-                if (count == 0) {
-                    count = 1;
-                }
-                Log.i("CUSTOM", "Replacing item...");
-                deletedArrayList.set(count - 1, db.getDetailsForDeletedTagID(String.valueOf(deletedArrayList.get(count - 1).getTagId())));
-                loadPreviousContent(count - 1);
-            } else {
-                deletedArrayList.set(0, db.getDetailsForDeletedTagID(String.valueOf(deletedArrayList.get(0).getTagId())));
-                loadPreviousContent(0);
-            }
-        }
-    }
-
     private void listeners() {
-
-        editTV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(DeleteActivity.this, DeleteEditActivity.class);
-                i.putExtra("tag_id", tagIdSpinner.getSelectedItem().toString());
-                startActivityForResult(i,38974 );
-            }
-        });
-
         ddED.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -217,18 +170,6 @@ public class DeleteActivity extends AppCompatActivity {
             }
         });
 
-        tagIdSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                loadDisplayBox(adapterView.getSelectedItem().toString());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
         releaseSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -261,140 +202,32 @@ public class DeleteActivity extends AppCompatActivity {
             }
         });
 
-        prevTV.setOnClickListener(new View.OnClickListener() {
+        cancelTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("CUSTOM", "prev button count = " + count);
-                if (deletedArrayList.size() > 0 && count < deletedArrayList.size() && count >= 0) {
-                    if (justNext) {
-                        count++;
-                        justNext = false;
-                    }
-                    loadPreviousContent(count);
-                    disableComponents();
-                    count++;
-                    saveTV.setText(getString(R.string.next));
-                    justPrev = true;
-                    editTV.setVisibility(View.VISIBLE);
-                } else {
-                    dialogDateUtil.showMessage("No Record Found.");
-                }
-                scrollView.fullScroll(ScrollView.FOCUS_UP);
+                finish();
             }
         });
 
         saveTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("CUSTOM", "save button count = " + count);
-                if (saveTV.getText().toString().equals(getString(R.string.delete))) {
-                    justNext = false;
-                    if (checkData()) {
-                        updateDetailsToLocalDatabase();
-                    }
-                } else if (saveTV.getText().toString().equals(getString(R.string.next))) {
-                    if (justPrev) {
-                        count--;
-                        justPrev = false;
-                    }
-                    count--;
-                    if (count < deletedArrayList.size() && count >= 0) {
-                        loadPreviousContent(count);
-                        disableComponents();
-                        justNext = true;
-                        editTV.setVisibility(View.VISIBLE);
-                    } else {
-                        clearUIElements();
-                        enableComponents();
-                        loadPrerequisiteContent(-1);
-                        saveTV.setText(getString(R.string.delete));
-                        editTV.setVisibility(View.INVISIBLE);
-                    }
+                if (checkData()) {
+                    updateDetailsToLocalDatabase();
                 }
-                scrollView.fullScroll(ScrollView.FOCUS_UP);
             }
         });
     }
 
-    private void loadPreviousContent(int count) {
-        AddAnimalModel addAnimalModel = deletedArrayList.get(count);
-        Log.i("CUSTOM",
-                "\nTag id = " + addAnimalModel.getTagId() +
-                        "\nanimal type = " + addAnimalModel.getAnimalType() +
-                        "\naquisation = " + addAnimalModel.getAquisation() +
-                        "\ngender = " + addAnimalModel.getGender() +
-                        //"\nfemale status = " + addAnimalModel.getFemaleStatus() +
-                        "\nbreed = " + addAnimalModel.getBreed() +
-                        "\ndate = " + addAnimalModel.getDate() +
-                        "\nweight = " + addAnimalModel.getWeight() +
-                        "\npurpose = " + addAnimalModel.getPurpose() +
-                        "\nprice = " + addAnimalModel.getPrice() +
-                        "\nmother id = " + addAnimalModel.getMotherId() +
-                        "\nrelease = " + addAnimalModel.getRelease() +
-                        "\nrelease price = " + addAnimalModel.getReleasePrice() +
-                        "\nrelease weight = " + addAnimalModel.getReleaseWeight() +
-                        "\ndeleted date = " + addAnimalModel.getdDate() +
-                        "\nremarks = " + addAnimalModel.getRemarks()
-        );
-        ArrayList<String> al = new ArrayList<>();
-        al.add(String.valueOf(addAnimalModel.getTagId()));
-        ArrayAdapter<String> aa = new ArrayAdapter<>(DeleteActivity.this, R.layout.layout_text_view_black, al);
-        tagIdSpinner.setAdapter(aa);
-        tagIdSpinner.setSelection(0);
-        loadDisplayBox(String.valueOf(addAnimalModel.getTagId()));
-        releaseSpinner.setSelection(addAnimalModel.getRelease());
-        String[] tempDate = addAnimalModel.getdDate().split("/");
-        Log.i("CUSTOM", "daye = " + tempDate);
-        ddED.setText(tempDate[0]);
-        mmED.setText(tempDate[1]);
-        yyyyED.setText(tempDate[2]);
-
-        if (releaseSpinner.getSelectedItemPosition() == 1) {
-            priceED.setText(addAnimalModel.getReleasePrice());
-        } else if (releaseSpinner.getSelectedItemPosition() == 2) {
-            String[] tempWeight = addAnimalModel.getReleaseWeight().split("\\.");
-            wtkgED.setText(String.valueOf(tempWeight[0]));
-            wtgmED.setText(String.valueOf(tempWeight[1]));
-        }
-        if (addAnimalModel.getRemarks() != null) {
-            if (!addAnimalModel.getRemarks().isEmpty()) {
-                remarksED.setText(addAnimalModel.getRemarks());
-            } else {
-                remarksED.setText("");
-                Log.i("CUSTOM", "remark empty");
-            }
-        } else {
-            remarksED.setText("");
-            Log.i("CUSTOM", "remark null");
-        }
-    }
-
     private void updateDetailsToLocalDatabase() {
         // true for real deletion
-        HashMap<String, String> response = db.userDeleteAnimalDetails(addAnimalModel, true);
+        HashMap<String, String> response = db.userDeleteAnimalDetails(addAnimalModel,true);
         if (Objects.equals(response.get("error"), "0")) {
-            dialogDateUtil.showMessage("Animal Deleted Successfully!");
-            count = 0;
-            deletedArrayList = db.getAllDeletedRecords();
-            Collections.sort(deletedArrayList, Collections.<AddAnimalModel>reverseOrder());
-            clearUIElements();
-            loadPrerequisiteContent(1);
-            //max_sr_no = db.getNewestSrNo();
+            Toast.makeText(DeleteEditActivity.this, "Animal Edited Successfully!", Toast.LENGTH_SHORT).show();
+            finishInStyle();
         } else {
             dialogDateUtil.showMessage("Internal Local Database Error");
         }
-    }
-
-    private void clearUIElements() {
-        releaseSpinner.setSelection(0);
-        ddED.setText("");
-        mmED.setText("");
-        yyyyED.setText("");
-        wtkgED.setText("");
-        wtgmED.setText("000");
-        priceED.setText("");
-        remarksED.setText("");
-        totalAnimalsCountTV.setText(String.valueOf(db.getTotalAnimalsCount()));
     }
 
     private boolean checkData() {
@@ -444,6 +277,8 @@ public class DeleteActivity extends AppCompatActivity {
         }
         if (!remarksED.getText().toString().isEmpty()) {
             addAnimalModel.setRemarks(remarksED.getText().toString().trim());
+        } else {
+            addAnimalModel.setRemarks(null);
         }
         addAnimalModel.setRelease(releaseSpinner.getSelectedItemPosition());
         addAnimalModel.setReleasePrice(priceED.getText().toString().trim());
@@ -494,37 +329,33 @@ public class DeleteActivity extends AppCompatActivity {
     }
 
     private void declarations() {
-        scrollView = findViewById(R.id.scrollView_DeleteActivity);
-        totalAnimalsCountTV = findViewById(R.id.textView_total_animals_DeleteActivity);
-        deletedAnimalsCountTV = findViewById(R.id.textView_total_animals_deleted_DeleteActivity);
-        prevTV = findViewById(R.id.textView_prev_DeleteActivity);
-        saveTV = findViewById(R.id.textView_next_DeleteActivity);
-        editTV = findViewById(R.id.textView_edit_DeleteActivity);
-        wtkgED = findViewById(R.id.et_kg_weight_DeleteActivity);
-        wtgmED = findViewById(R.id.et_gm_weight_DeleteActivity);
-        ddED = findViewById(R.id.et1_date_DeleteActivity);
-        mmED = findViewById(R.id.et2_date_DeleteActivity);
-        yyyyED = findViewById(R.id.et3_date_DeleteActivity);
-        priceED = findViewById(R.id.editText_price_DeleteActivity);
-        priceLayout = findViewById(R.id.layout_price_DeleteActivity);
-        weightLayout = findViewById(R.id.layout_weight_DeleteActivity);
-        priceLine = findViewById(R.id.line_price_DeleteActivity);
-        weightLine = findViewById(R.id.line_weight_DeleteActivity);
-        tagIdSpinner = findViewById(R.id.spinner_tag_id_DeleteActivity);
-        releaseSpinner = findViewById(R.id.spinner_release_DeleteActivity);
-        remarksED = findViewById(R.id.editText_remarks_DeleteActivity);
-        animalTypeTV = findViewById(R.id.textView_animal_type_DeleteActivity);
-        breedTV = findViewById(R.id.textView_breed_DeleteActivity);
-        genderTV = findViewById(R.id.textView_gender_DeleteActivity);
-        dateTV = findViewById(R.id.textView_date_DeleteActivity);
-        weightTV = findViewById(R.id.textView_weight_DeleteActivity);
+        scrollView = findViewById(R.id.scrollView_DeleteEditActivity);
+        cancelTV = findViewById(R.id.textView_cancel_DeleteEditActivity);
+        saveTV = findViewById(R.id.textView_next_DeleteEditActivity);
+        wtkgED = findViewById(R.id.et_kg_weight_DeleteEditActivity);
+        wtgmED = findViewById(R.id.et_gm_weight_DeleteEditActivity);
+        ddED = findViewById(R.id.et1_date_DeleteEditActivity);
+        mmED = findViewById(R.id.et2_date_DeleteEditActivity);
+        yyyyED = findViewById(R.id.et3_date_DeleteEditActivity);
+        priceED = findViewById(R.id.editText_price_DeleteEditActivity);
+        tagIdED = findViewById(R.id.editText_tag_id_DeleteEditActivity);
+        priceLayout = findViewById(R.id.layout_price_DeleteEditActivity);
+        weightLayout = findViewById(R.id.layout_weight_DeleteEditActivity);
+        priceLine = findViewById(R.id.line_price_DeleteEditActivity);
+        weightLine = findViewById(R.id.line_weight_DeleteEditActivity);
+        releaseSpinner = findViewById(R.id.spinner_release_DeleteEditActivity);
+        remarksED = findViewById(R.id.editText_remarks_DeleteEditActivity);
+        animalTypeTV = findViewById(R.id.textView_animal_type_DeleteEditActivity);
+        breedTV = findViewById(R.id.textView_breed_DeleteEditActivity);
+        genderTV = findViewById(R.id.textView_gender_DeleteEditActivity);
+        dateTV = findViewById(R.id.textView_date_DeleteEditActivity);
+        weightTV = findViewById(R.id.textView_weight_DeleteEditActivity);
 
-        saveTV.setText(getString(R.string.delete));
         weightLine.setVisibility(View.GONE);
         weightLayout.setVisibility(View.GONE);
-        dialogDateUtil = new DialogDateUtil(DeleteActivity.this);
-        db = new LocalDatabase(DeleteActivity.this);
-        deletedArrayList = new ArrayList<>();
+        dialogDateUtil = new DialogDateUtil(DeleteEditActivity.this);
+        db = new LocalDatabase(DeleteEditActivity.this);
+        addAnimalModel = db.getDetailsForDeletedTagID(tagId);
 
         loadPrerequisiteContent(-1);
     }
@@ -532,99 +363,41 @@ public class DeleteActivity extends AppCompatActivity {
     private void loadPrerequisiteContent(int status) {
         ArrayList<String> al = db.getDataForMastersTable(LocalDatabase.TABLE_RELEASE);
         ArrayAdapter aa = new ArrayAdapter<String>(
-                DeleteActivity.this,
+                DeleteEditActivity.this,
                 R.layout.layout_text_view_black,
                 al
         );
+        tagIdED.setText(String.valueOf(addAnimalModel.getTagId()));
         releaseSpinner.setAdapter(aa);
-        Log.i("CUSTOM", "Masters table record for " + LocalDatabase.TABLE_RELEASE + " :: ");
-        for (String data : al) {
-            Log.i("CUSTOM", data);
+        loadDisplayBox(tagId);
+        releaseSpinner.setSelection(addAnimalModel.getRelease());
+        String[] tempDate = addAnimalModel.getdDate().split("/");
+        ddED.setText(tempDate[0]);
+        mmED.setText(tempDate[1]);
+        yyyyED.setText(tempDate[2]);
+
+        if (releaseSpinner.getSelectedItemPosition() == 1) {
+            priceED.setText(addAnimalModel.getReleasePrice());
+        } else if (releaseSpinner.getSelectedItemPosition() == 2) {
+            String[] tempWeight = addAnimalModel.getReleaseWeight().split("\\.");
+            wtkgED.setText(String.valueOf(tempWeight[0]));
+            wtgmED.setText(String.valueOf(tempWeight[1]));
         }
-        totalAnimalsCountTV.setText(String.valueOf(db.getTotalAnimalsCount()));
-        deletedAnimalsCountTV.setText(String.valueOf(db.getDeletedAnimalsCount()));
-        ArrayList<String> list = db.getAllNonDeletedTagIds();
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
-                DeleteActivity.this,
-                R.layout.layout_text_view_black,
-                list);
-        if (list.isEmpty()) {
-            Log.i("CUSTOM", "Tag id list is empty");
-            if (status != 1) {
-                dialogDateUtil.showMessage("No Record Found. Please Add one before you delete it.");
+        if (addAnimalModel.getRemarks() != null) {
+            if (!addAnimalModel.getRemarks().isEmpty()) {
+                remarksED.setText(addAnimalModel.getRemarks());
+            } else {
+                remarksED.setText("");
+                Log.i("CUSTOM", "remark empty");
             }
-            disableComponents();
         } else {
-            Log.i("CUSTOM", "Tag id list is not empty");
-            tagIdSpinner.setAdapter(arrayAdapter);
-            loadDisplayBox(tagIdSpinner.getSelectedItem().toString());
+            remarksED.setText("");
+            Log.i("CUSTOM", "remark null");
         }
-        tagIdSpinner.setAdapter(arrayAdapter);
-        deletedArrayList = db.getAllDeletedRecords();
-        Collections.sort(deletedArrayList, Collections.<AddAnimalModel>reverseOrder());
-        count = 0;
-        justNext = false;
-    }
 
-    private void disableComponents() {
-        try {
-            new Handler().post(new Runnable() {
-                @Override
-                public void run() {
-                    if (tagIdSpinner.getCount() > 0) {
-                        ((TextView) tagIdSpinner.getSelectedView()).setTextColor(getResources().getColor(android.R.color.black));
-                    }
-                }
-            });
-        } catch (Exception e) {
-        }
-        tagIdSpinner.setEnabled(false);
-        tagIdSpinner.setFocusable(false);
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    if (releaseSpinner.getCount() > 0) {
-                        ((TextView) releaseSpinner.getSelectedView()).setTextColor(Color.BLACK);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Log.i("CUSTOM", "exception = " + e.getMessage());
-                }
-            }
-        });
-        releaseSpinner.setEnabled(false);
-        releaseSpinner.setFocusable(false);
-        remarksED.setEnabled(false);
-        remarksED.setTextColor(getResources().getColor(android.R.color.black));
-        ddED.setEnabled(false);
-        ddED.setTextColor(getResources().getColor(android.R.color.black));
-        mmED.setEnabled(false);
-        mmED.setTextColor(getResources().getColor(android.R.color.black));
-        yyyyED.setEnabled(false);
-        yyyyED.setTextColor(getResources().getColor(android.R.color.black));
-        wtkgED.setEnabled(false);
-        wtkgED.setTextColor(getResources().getColor(android.R.color.black));
-        wtgmED.setEnabled(false);
-        wtgmED.setTextColor(getResources().getColor(android.R.color.black));
-        priceED.setEnabled(false);
-        priceED.setTextColor(getResources().getColor(android.R.color.black));
-    }
-
-    private void enableComponents() {
-        tagIdSpinner.setEnabled(true);
-        releaseSpinner.setEnabled(true);
-        remarksED.setEnabled(true);
-        ddED.setEnabled(true);
-        mmED.setEnabled(true);
-        yyyyED.setEnabled(true);
-        wtkgED.setEnabled(true);
-        wtgmED.setEnabled(true);
-        priceED.setEnabled(true);
     }
 
     private void loadDisplayBox(String tagId) {
-        addAnimalModel = db.getDetailsForDeletedTagID(tagId);
         animalTypeTV.setText(db.getFieldBySrNo(addAnimalModel.getAnimalType(), LocalDatabase.TABLE_ANIMAL_TYPE));
         breedTV.setText(db.getBreedBySrNoAndAnimalType(addAnimalModel.getBreed(), addAnimalModel.getAnimalType()));
         dateTV.setText(addAnimalModel.getDate());
@@ -650,7 +423,7 @@ public class DeleteActivity extends AppCompatActivity {
             finish();
         }
         if (id == R.id.action_about_us) {
-            startActivity(new Intent(DeleteActivity.this, AboutUsActivity.class)
+            startActivity(new Intent(DeleteEditActivity.this, AboutUsActivity.class)
                     .putExtra("from", "delete_activity"));
             finish();
         }
@@ -664,6 +437,11 @@ public class DeleteActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void finishInStyle(){
+        Intent intent = getIntent();
+        setResult(RESULT_OK, intent);
+        finish();
+    }
 
     @Override
     protected void onDestroy() {

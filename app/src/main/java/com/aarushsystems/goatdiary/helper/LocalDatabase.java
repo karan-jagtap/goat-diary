@@ -660,7 +660,7 @@ public class LocalDatabase extends SQLiteOpenHelper {
 //        cv.put(KEY_RELEASE, model.getRelease());
 //        cv.put(KEY_DELETED, model.getDeleted());
         int rows = db.update(TABLE_ANIMAL_DETAILS, cv, KEY_TAG_ID + "= ?", new String[]{String.valueOf(model.getTagId())});
-        if(rows==1){
+        if (rows == 1) {
             response.put("error", "0");
             response.put("message", "success");
             db.close();
@@ -723,7 +723,7 @@ public class LocalDatabase extends SQLiteOpenHelper {
     public ArrayList<AddAnimalModel> getAllAnimalDetailsRecords() {
         ArrayList<AddAnimalModel> arrayList = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        String selectQuery = "SELECT * FROM " + TABLE_ANIMAL_DETAILS;
+        String selectQuery = "SELECT * FROM " + TABLE_ANIMAL_DETAILS +" WHERE "+KEY_DELETED+" = 0";
         Cursor cursor = db.rawQuery(selectQuery, null);
         while (cursor.moveToNext()) {
             AddAnimalModel model = new AddAnimalModel();
@@ -1008,6 +1008,40 @@ public class LocalDatabase extends SQLiteOpenHelper {
             model.setPrice(cursor.getString(10));
             model.setRelease(cursor.getInt(11));
             model.setDeleted(0);
+            cursor.close();
+            db.close();
+        } else {
+            model = null;
+        }
+        cursor.close();
+        db.close();
+        return model;
+    }
+
+    public AddAnimalModel getDetailsForDeletedTagID(String tagId) {
+        AddAnimalModel model = new AddAnimalModel();
+        SQLiteDatabase db = getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + TABLE_ANIMAL_DETAILS + " WHERE " + KEY_TAG_ID + "=" + tagId;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            model.setSrno(cursor.getInt(0));
+            model.setTagId(cursor.getInt(1));
+            model.setAnimalType(cursor.getInt(2));
+            model.setAquisation(cursor.getInt(3));
+            model.setGender(cursor.getString(4));
+            //model.setFemaleStatus(cursor.getString(5));
+            model.setBreed(cursor.getInt(5));
+            model.setDate(cursor.getString(6));
+            model.setWeight(cursor.getString(7));
+            model.setPurpose(cursor.getInt(8));
+            model.setMotherId(cursor.getString(9));
+            model.setPrice(cursor.getString(10));
+            model.setRelease(cursor.getInt(11));
+            model.setdDate(cursor.getString(12));
+            model.setReleasePrice(cursor.getString(13));
+            model.setReleaseWeight(cursor.getString(14));
+            model.setRemarks(cursor.getString(15));
+            model.setDeleted(1);
             cursor.close();
             db.close();
         } else {

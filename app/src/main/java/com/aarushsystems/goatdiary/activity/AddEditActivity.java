@@ -20,6 +20,7 @@ import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -34,7 +35,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class EditActivity extends AppCompatActivity {
+public class AddEditActivity extends AppCompatActivity {
 
     private LocalDatabase db;
     private DialogDateUtil dialogDateUtil;
@@ -51,7 +52,7 @@ public class EditActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit);
+        setContentView(R.layout.activity_add_edit);
         Toolbar toolbar = findViewById(R.id.toolbar_EditActivity);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
@@ -106,7 +107,7 @@ public class EditActivity extends AppCompatActivity {
             al.add(String.valueOf(addAnimalModel.getMotherId()));
             Log.i("CUSTOM", "setting mother id = " + al.get(0));
             ArrayAdapter<String> aa = new ArrayAdapter<>(
-                    EditActivity.this,
+                    AddEditActivity.this,
                     R.layout.layout_text_view_black,
                     al);
             motherIdSpinner.setAdapter(aa);
@@ -227,7 +228,7 @@ public class EditActivity extends AppCompatActivity {
                     breedLayout.setVisibility(View.VISIBLE);
                     ArrayList<String> al = db.getDataForBreedTable(i);
                     ArrayAdapter<String> aa = new ArrayAdapter<>(
-                            EditActivity.this,
+                            AddEditActivity.this,
                             R.layout.layout_text_view_black,
                             al);
                     al.add(0, "SELECT");
@@ -283,7 +284,7 @@ public class EditActivity extends AppCompatActivity {
                     motherIdLine.setVisibility(View.VISIBLE);
                     motherIdList = db.getAllFemalesTagIds(animalTypeSpinner.getSelectedItemPosition());
                     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
-                            EditActivity.this,
+                            AddEditActivity.this,
                             R.layout.layout_text_view_black, motherIdList);
                     if (!motherIdList.isEmpty()) {
                         motherIdList.add(0, "SELECT");
@@ -347,7 +348,7 @@ public class EditActivity extends AppCompatActivity {
     private void addDetailsToLocalDatabase() {
         HashMap<String, String> response = db.userEditAddAnimalDetails(addAnimalModel);
         if (Objects.equals(response.get("error"), "0")) {
-            dialogDateUtil.showMessage("Animal Edited Successfully!");
+            Toast.makeText(AddEditActivity.this, "Animal Edited Successfully!", Toast.LENGTH_SHORT).show();
             finish();
         } else {
             if (Objects.equals(response.get("message"), "failure")) {
@@ -502,11 +503,11 @@ public class EditActivity extends AppCompatActivity {
         //femaleLine.setVisibility(View.GONE);
 
         breedLayout.setVisibility(View.GONE);
-        dialogDateUtil = new DialogDateUtil(EditActivity.this);
-        db = new LocalDatabase(EditActivity.this);
+        dialogDateUtil = new DialogDateUtil(AddEditActivity.this);
+        db = new LocalDatabase(AddEditActivity.this);
         addAnimalModel = db.getDetailsForTagID(tagId);
         ArrayList<String> animalType = db.getDataForMastersTable(LocalDatabase.TABLE_ANIMAL_TYPE);
-        ArrayAdapter animalTypeAdapter = new ArrayAdapter<String>(EditActivity.this,
+        ArrayAdapter animalTypeAdapter = new ArrayAdapter<String>(AddEditActivity.this,
                 R.layout.layout_text_view_black,
                 animalType);
         animalTypeSpinner.setAdapter(animalTypeAdapter);
@@ -516,7 +517,7 @@ public class EditActivity extends AppCompatActivity {
         }
 */
         ArrayList<String> aquisationType = db.getDataForMastersTable(LocalDatabase.TABLE_AQUISATION);
-        ArrayAdapter aquisationTypeAdapter = new ArrayAdapter<String>(EditActivity.this,
+        ArrayAdapter aquisationTypeAdapter = new ArrayAdapter<String>(AddEditActivity.this,
                 R.layout.layout_text_view_black,
                 aquisationType);
         aquisationSpinner.setAdapter(aquisationTypeAdapter);
@@ -536,7 +537,7 @@ public class EditActivity extends AppCompatActivity {
         }*/
 
         ArrayList<String> purposeType = db.getDataForMastersTable(LocalDatabase.TABLE_PURPOSE);
-        ArrayAdapter purposeTypeAdapter = new ArrayAdapter<String>(EditActivity.this,
+        ArrayAdapter purposeTypeAdapter = new ArrayAdapter<String>(AddEditActivity.this,
                 R.layout.layout_text_view_black,
                 purposeType);
         purposeSpinner.setAdapter(purposeTypeAdapter);
@@ -560,7 +561,7 @@ public class EditActivity extends AppCompatActivity {
             finish();
         }
         if (id == R.id.action_about_us) {
-            startActivity(new Intent(EditActivity.this, AboutUsActivity.class)
+            startActivity(new Intent(AddEditActivity.this, AboutUsActivity.class)
                     .putExtra("from", "add_activity"));
             finish();
         }

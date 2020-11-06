@@ -130,64 +130,68 @@ public class MasterSettingsActivity extends AppCompatActivity {
         delTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (recordSpinner.getSelectedItemPosition() != 0) {
-                    if (delSpinner.getSelectedItemPosition() < 8) {
-                        HashMap<String, String> map = db.deleteSingleRecord(Integer.parseInt(recordSpinner.getSelectedItem().toString()), delTableName);
-                        if (map.get("error").equals("0")) {
-                            dialogDateUtil.showMessage("Record Deleted.");
-                            //delDisplayTV.setVisibility(View.GONE);
-                            ArrayList<String> al = db.getAllSrNosByTable(delTableName);
-                            al.add(0, "SELECT");
-                            if (al.size() == 1) {
-                                dialogDateUtil.showMessage("No Record Found.");
+                if (delSpinner.getSelectedItemPosition() != 0) {
+                    if (recordSpinner.getSelectedItemPosition() != 0) {
+                        if (delSpinner.getSelectedItemPosition() < 8) {
+                            HashMap<String, String> map = db.deleteSingleRecord(Integer.parseInt(recordSpinner.getSelectedItem().toString()), delTableName);
+                            if (map.get("error").equals("0")) {
+                                dialogDateUtil.showMessage("Record Deleted.");
+                                //delDisplayTV.setVisibility(View.GONE);
+                                ArrayList<String> al = db.getAllSrNosByTable(delTableName);
+                                al.add(0, "SELECT");
+                                if (al.size() == 1) {
+                                    dialogDateUtil.showMessage("No Record Found.");
+                                }
+                                ArrayAdapter<String> aa = new ArrayAdapter<>(MasterSettingsActivity.this,
+                                        R.layout.layout_text_view_black, al);
+                                recordSpinner.setAdapter(aa);
+                                delSpinner.setSelection(0);
+                            } else {
+                                dialogDateUtil.showMessage("Local Database Error.");
                             }
-                            ArrayAdapter<String> aa = new ArrayAdapter<>(MasterSettingsActivity.this,
-                                    R.layout.layout_text_view_black, al);
-                            recordSpinner.setAdapter(aa);
-                            delSpinner.setSelection(0);
-                        } else {
-                            dialogDateUtil.showMessage("Local Database Error.");
-                        }
-                    } else if (delSpinner.getSelectedItemPosition() == 8) {
-                        if (db.deleteAnimalPermanently(recordSpinner.getSelectedItem().toString())) {
-                            dialogDateUtil.showMessage("Record Deleted.");
-                            //delDisplayTV.setVisibility(View.GONE);
-                            ArrayList<String> al = db.getAllNonDeletedTagIds();
-                            al.add(0, "SELECT");
-                            if (al.size() == 1) {
-                                dialogDateUtil.showMessage("No Record Found.");
+                        } else if (delSpinner.getSelectedItemPosition() == 8) {
+                            if (db.deleteAnimalPermanently(recordSpinner.getSelectedItem().toString())) {
+                                dialogDateUtil.showMessage("Record Deleted.");
+                                //delDisplayTV.setVisibility(View.GONE);
+                                ArrayList<String> al = db.getAllNonDeletedTagIds();
+                                al.add(0, "SELECT");
+                                if (al.size() == 1) {
+                                    dialogDateUtil.showMessage("No Record Found.");
+                                }
+                                ArrayAdapter<String> aa = new ArrayAdapter<>(MasterSettingsActivity.this,
+                                        R.layout.layout_text_view_black, al);
+                                recordSpinner.setAdapter(aa);
+                                delSpinner.setSelection(0);
+                            } else {
+                                dialogDateUtil.showMessage("Local Database Error.");
                             }
-                            ArrayAdapter<String> aa = new ArrayAdapter<>(MasterSettingsActivity.this,
-                                    R.layout.layout_text_view_black, al);
-                            recordSpinner.setAdapter(aa);
-                            delSpinner.setSelection(0);
-                        } else {
-                            dialogDateUtil.showMessage("Local Database Error.");
-                        }
-                    } else if (delSpinner.getSelectedItemPosition() == 9) {
-                        AddAnimalModel model = new AddAnimalModel();
-                        model.setTagId(Integer.parseInt(recordSpinner.getSelectedItem().toString()));
-                        model.setDeleted(0);
-                        //false for reversing delete operation
-                        HashMap<String, String> map = db.userDeleteAnimalDetails(model, false);
-                        if (map.get("error").equals("0")) {
-                            dialogDateUtil.showMessage("Record Deleted.");
-                            //delDisplayTV.setVisibility(View.GONE);
-                            ArrayList<String> al = db.getAllDeletedTagIds();
-                            al.add(0, "SELECT");
-                            if (al.size() == 1) {
-                                dialogDateUtil.showMessage("No Record Found.");
+                        } else if (delSpinner.getSelectedItemPosition() == 9) {
+                            AddAnimalModel model = new AddAnimalModel();
+                            model.setTagId(Integer.parseInt(recordSpinner.getSelectedItem().toString()));
+                            model.setDeleted(0);
+                            //false for reversing delete operation
+                            HashMap<String, String> map = db.userDeleteAnimalDetails(model, false);
+                            if (map.get("error").equals("0")) {
+                                dialogDateUtil.showMessage("Record Deleted.");
+                                //delDisplayTV.setVisibility(View.GONE);
+                                ArrayList<String> al = db.getAllDeletedTagIds();
+                                al.add(0, "SELECT");
+                                if (al.size() == 1) {
+                                    dialogDateUtil.showMessage("No Record Found.");
+                                }
+                                ArrayAdapter<String> aa = new ArrayAdapter<>(MasterSettingsActivity.this,
+                                        R.layout.layout_text_view_black, al);
+                                recordSpinner.setAdapter(aa);
+                                delSpinner.setSelection(0);
+                            } else {
+                                dialogDateUtil.showMessage("Local Database Error.");
                             }
-                            ArrayAdapter<String> aa = new ArrayAdapter<>(MasterSettingsActivity.this,
-                                    R.layout.layout_text_view_black, al);
-                            recordSpinner.setAdapter(aa);
-                            delSpinner.setSelection(0);
-                        } else {
-                            dialogDateUtil.showMessage("Local Database Error.");
                         }
+                    } else {
+                        dialogDateUtil.showMessage("No Record Selected.");
                     }
                 } else {
-                    dialogDateUtil.showMessage("No Record Selected.");
+                    dialogDateUtil.showMessage("Please Select a table first.");
                 }
             }
         });

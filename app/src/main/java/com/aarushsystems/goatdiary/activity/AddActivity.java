@@ -370,7 +370,7 @@ public class AddActivity extends AppCompatActivity {
         editTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(AddActivity.this, EditActivity.class);
+                Intent i = new Intent(AddActivity.this, AddEditActivity.class);
                 i.putExtra("tag_id", tagIdED.getText().toString());
                 startActivity(i);
             }

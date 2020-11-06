@@ -169,7 +169,14 @@
             android:windowSoftInputMode="stateUnchanged"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activity.EditActivity"
+            android:name=".activity.AddEditActivity"
+            android:label="@string/edit_animal"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.EditActivity"
+            android:windowSoftInputMode="stateUnchanged"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.DeleteEditActivity"
             android:label="@string/edit_animal"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.EditActivity"
