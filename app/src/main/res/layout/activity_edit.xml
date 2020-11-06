@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical"
-    tools:context=".activity.AddActivity">
+    tools:context=".activity.EditActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_AddActivity"
+            android:id="@+id/toolbar_EditActivity"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -34,7 +34,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
-        android:id="@+id/scrollView_AddActivity"
+        android:id="@+id/scrollView_EditActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -83,14 +83,13 @@
                         android:layout_weight="0.8"
                         android:background="@android:color/white"
                         android:padding="8dp"
-                        android:text="@string/add_animal"
+                        android:text="@string/edit_animal"
                         android:textAlignment="center"
                         android:textAllCaps="true"
                         android:textColor="@android:color/black"
                         android:textSize="18sp" />
 
                     <TextView
-                        android:id="@+id/textView_total_animals_AddActivity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="2dp"
@@ -135,7 +134,9 @@
                         android:textSize="17sp" />
 
                     <EditText
-                        android:id="@+id/editText_tag_id_AddActivity"
+                        android:textColor="@android:color/black"
+                        android:enabled="false"
+                        android:id="@+id/editText_tag_id_EditActivity"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -155,7 +156,7 @@
                     android:background="@android:color/darker_gray" />
 
                 <LinearLayout
-                    android:id="@+id/layout_animal_type_AddActivity"
+                    android:id="@+id/layout_animal_type_EditActivity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -194,7 +195,7 @@
                         android:paddingBottom="2dp">
 
                         <Spinner
-                            android:id="@+id/spinner_animal_type_AddActivity"
+                            android:id="@+id/spinner_animal_type_EditActivity"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
@@ -246,7 +247,7 @@
                         android:paddingBottom="2dp">
 
                         <Spinner
-                            android:id="@+id/spinner_aquisation_AddActivity"
+                            android:id="@+id/spinner_aquisation_EditActivity"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
@@ -289,13 +290,13 @@
                         android:textSize="17sp" />
 
                     <RadioGroup
-                        android:id="@+id/radioGroup_gender_AddActivity"
+                        android:id="@+id/radioGroup_gender_EditActivity"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:background="@drawable/outline_edittext_blue"
-                        android:checkedButton="@id/radio_male_AddActivity"
+                        android:checkedButton="@id/radio_male_EditActivity"
                         android:orientation="horizontal"
                         android:padding="8dp"
                         android:paddingTop="2dp"
@@ -303,14 +304,14 @@
                         android:weightSum="2">
 
                         <RadioButton
-                            android:id="@+id/radio_male_AddActivity"
+                            android:id="@+id/radio_male_EditActivity"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="M" />
 
                         <RadioButton
-                            android:id="@+id/radio_female_AddActivity"
+                            android:id="@+id/radio_female_EditActivity"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -328,7 +329,7 @@
                     android:background="@android:color/darker_gray" />
 
                 <!--<LinearLayout
-                    android:id="@+id/layout_female_group_AddActivity"
+                    android:id="@+id/layout_female_group_EditActivity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -357,26 +358,26 @@
                         android:textSize="17sp" />
 
                     <RadioGroup
-                        android:id="@+id/radioGroup_female_AddActivity"
+                        android:id="@+id/radioGroup_female_EditActivity"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:background="@drawable/outline_edittext_blue"
-                        android:checkedButton="@id/radio_non_pregnant_AddActivity"
+                        android:checkedButton="@id/radio_non_pregnant_EditActivity"
                         android:orientation="vertical"
                         android:padding="8dp"
                         android:paddingTop="2dp"
                         android:paddingBottom="2dp">
 
                         <RadioButton
-                            android:id="@+id/radio_pregnant_AddActivity"
+                            android:id="@+id/radio_pregnant_EditActivity"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/pregnant" />
 
                         <RadioButton
-                            android:id="@+id/radio_non_pregnant_AddActivity"
+                            android:id="@+id/radio_non_pregnant_EditActivity"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checked="true"
@@ -387,7 +388,7 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/line_female_group_AddActivity"
+                    android:id="@+id/line_female_group_EditActivity"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="2dp"
@@ -395,7 +396,7 @@
                     android:background="@android:color/darker_gray" />-->
 
                 <LinearLayout
-                    android:id="@+id/layout_breed_AddActivity"
+                    android:id="@+id/layout_breed_EditActivity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -439,7 +440,7 @@
                             android:paddingBottom="2dp">
 
                             <Spinner
-                                android:id="@+id/spinner_breed_AddActivity"
+                                android:id="@+id/spinner_breed_EditActivity"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" />
                         </LinearLayout>
@@ -494,7 +495,7 @@
                         android:weightSum="2">
 
                         <EditText
-                            android:id="@+id/et1_date_AddActivity"
+                            android:id="@+id/et1_date_EditActivity"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -515,7 +516,7 @@
                             android:paddingBottom="8dp" />
 
                         <EditText
-                            android:id="@+id/et2_date_AddActivity"
+                            android:id="@+id/et2_date_EditActivity"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -535,7 +536,7 @@
                             android:paddingBottom="8dp" />
 
                         <EditText
-                            android:id="@+id/et3_date_AddActivity"
+                            android:id="@+id/et3_date_EditActivity"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -610,7 +611,7 @@
                             android:weightSum="2">
 
                             <EditText
-                                android:id="@+id/et_kg_weight_AddActivity"
+                                android:id="@+id/et_kg_weight_EditActivity"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
@@ -639,7 +640,7 @@
                                 android:textSize="16sp" />
 
                             <EditText
-                                android:id="@+id/et_gm_weight_AddActivity"
+                                android:id="@+id/et_gm_weight_EditActivity"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
@@ -718,7 +719,7 @@
                         android:paddingBottom="2dp">
 
                         <Spinner
-                            android:id="@+id/spinner_purpose_AddActivity"
+                            android:id="@+id/spinner_purpose_EditActivity"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
@@ -732,7 +733,7 @@
                     android:background="@android:color/darker_gray" />
 
                 <LinearLayout
-                    android:id="@+id/layout_mother_id_AddActivity"
+                    android:id="@+id/layout_mother_id_EditActivity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -771,14 +772,14 @@
                         android:paddingBottom="2dp">
 
                         <Spinner
-                            android:id="@+id/spinner_mother_id_AddActivity"
+                            android:id="@+id/spinner_mother_id_EditActivity"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/line_mother_id_AddActivity"
+                    android:id="@+id/line_mother_id_EditActivity"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="2dp"
@@ -786,7 +787,7 @@
                     android:background="@android:color/darker_gray" />
 
                 <LinearLayout
-                    android:id="@+id/layout_price_AddActivity"
+                    android:id="@+id/layout_price_EditActivity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -825,7 +826,7 @@
                         android:weightSum="1">
 
                         <EditText
-                            android:id="@+id/editText_price_AddActivity"
+                            android:id="@+id/editText_price_EditActivity"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -867,53 +868,36 @@
                 android:weightSum="2">
 
                 <TextView
-                    android:id="@+id/textView_prev_AddActivity"
+                    android:id="@+id/textView_cancel_EditActivity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:layout_marginStart="10dp"
                     android:layout_weight="0.5"
                     android:background="@color/button_yellow"
-                    android:drawableStart="@drawable/ic_chevron_left_white_24dp"
                     android:elevation="3dp"
                     android:paddingStart="8dp"
                     android:paddingTop="4dp"
                     android:paddingEnd="10dp"
                     android:paddingBottom="4dp"
-                    android:text="@string/prev"
+                    android:text="@string/cancel"
                     android:textAlignment="center"
                     android:textColor="@android:color/white"
                     android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/textView_edit_AddActivity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:visibility="invisible"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_weight="1"
-                    android:background="@color/button_pink"
-                    android:paddingStart="8dp"
-                    android:gravity="center"
-                    android:paddingTop="4dp"
-                    android:paddingEnd="10dp"
-                    android:paddingBottom="4dp"
-                    android:text="Edit"
-                    android:textAlignment="center"
-                    android:textColor="@android:color/white"
-                    android:textSize="16sp" />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
 
                 <TextView
-                    android:id="@+id/textView_save_AddActivity"
+                    android:id="@+id/textView_save_EditActivity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_marginEnd="10dp"
                     android:layout_weight="0.5"
                     android:background="@color/button_green"
-                    android:drawableEnd="@drawable/ic_chevron_right_white_24dp"
                     android:elevation="3dp"
                     android:paddingStart="10dp"
                     android:paddingTop="4dp"

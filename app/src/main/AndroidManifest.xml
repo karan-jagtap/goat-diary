@@ -169,6 +169,13 @@
             android:windowSoftInputMode="stateUnchanged"
             tools:ignore="LockedOrientationActivity" />
         <activity
+            android:name=".activity.EditActivity"
+            android:label="@string/edit_animal"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.EditActivity"
+            android:windowSoftInputMode="stateUnchanged"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
             android:name=".activity.AboutUsActivity"
             android:label="@string/title_activity_about_us"
             android:parentActivityName=".activity.LandingActivity"

@@ -31,46 +31,86 @@ import com.aarushsystems.goatdiary.helper.LocalDatabase;
 import com.aarushsystems.goatdiary.model.AddAnimalModel;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class AddActivity extends AppCompatActivity {
+public class EditActivity extends AppCompatActivity {
 
     private LocalDatabase db;
     private DialogDateUtil dialogDateUtil;
     private ScrollView scrollView;
-    private int count = 0;
-    private boolean justPrev, justNext, newScreen = true;
     private RadioGroup genderRG;
     private AddAnimalModel addAnimalModel;
     private ArrayList<String> motherIdList;
-    private ArrayList<AddAnimalModel> addAnimalArrayList;
     private LinearLayout motherIdLayout, priceLayout, breedLayout;
-    private TextView totalAnimalsCountTV, prevTV, editTV, saveTV, motherIdLine;
+    private TextView cancelTV, saveTV, motherIdLine;
     private Spinner animalTypeSpinner, aquisationSpinner, breedSpinner, purposeSpinner, motherIdSpinner;
     private EditText tagIdED, ddED, mmED, yyyyED, wtkgED, wtgmED, priceED;
+    private String tagId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add);
-        Toolbar toolbar = findViewById(R.id.toolbar_AddActivity);
+        setContentView(R.layout.activity_edit);
+        Toolbar toolbar = findViewById(R.id.toolbar_EditActivity);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        if (getIntent().getStringExtra("tag_id") != null) {
+            tagId = getIntent().getStringExtra("tag_id");
+        } else {
+            finish();
+        }
+
         declarations();
+        loadPreviousData();
         listeners();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.i("CUSTOM", "onStart ==> " + count);
-        if (count - 1 >= 0) {
-            addAnimalArrayList.set(count - 1, db.getDetailsForTagID(String.valueOf(addAnimalArrayList.get(count - 1).getTagId())));
-            loadPreviousContent(count-1);
+    private void loadPreviousData() {
+        tagIdED.setText(String.valueOf(addAnimalModel.getTagId()));
+        animalTypeSpinner.setSelection(addAnimalModel.getAnimalType(), false);
+        aquisationSpinner.setSelection(addAnimalModel.getAquisation(), false);
+        if (breedSpinner.getCount() > addAnimalModel.getBreed()) {
+            breedSpinner.setSelection(addAnimalModel.getBreed(), false);
+        }
+        if (addAnimalModel.getGender().equals("M")) {
+            Log.i("CUSTOM", "male checked");
+            RadioButton male = findViewById(R.id.radio_male_EditActivity);
+            male.setChecked(true);
+        } else {
+            Log.i("CUSTOM", "female checked");
+            RadioButton female = findViewById(R.id.radio_female_EditActivity);
+            female.setChecked(true);
+                /*if (addAnimalModel.getFemaleStatus().equals("Preg")) {
+                    RadioButton preg = findViewById(R.id.radio_pregnant_AddActivity);
+                    preg.setChecked(true);
+                } else {
+                    RadioButton nonPreg = findViewById(R.id.radio_non_pregnant_AddActivity);
+                    nonPreg.setChecked(true);
+                }*/
+        }
+        String[] tempDate = addAnimalModel.getDate().split("/");
+        ddED.setText(tempDate[0]);
+        mmED.setText(tempDate[1]);
+        yyyyED.setText(tempDate[2]);
+        String[] tempWeight = addAnimalModel.getWeight().split("\\.");
+        wtkgED.setText(String.valueOf(tempWeight[0]));
+        wtgmED.setText(String.valueOf(tempWeight[1]));
+        purposeSpinner.setSelection(addAnimalModel.getPurpose(), true);
+        if (aquisationSpinner.getSelectedItemPosition() == 1) {
+            priceED.setText(addAnimalModel.getPrice());
+        } else if (aquisationSpinner.getSelectedItemPosition() == 2) {
+            ArrayList<String> al = new ArrayList<>();
+            al.add(String.valueOf(addAnimalModel.getMotherId()));
+            Log.i("CUSTOM", "setting mother id = " + al.get(0));
+            ArrayAdapter<String> aa = new ArrayAdapter<>(
+                    EditActivity.this,
+                    R.layout.layout_text_view_black,
+                    al);
+            motherIdSpinner.setAdapter(aa);
+            motherIdSpinner.setSelection(0, true);
         }
     }
 
@@ -179,24 +219,6 @@ public class AddActivity extends AppCompatActivity {
             }
         });
 
-        /*genderRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                if (i == R.id.radio_male_AddActivity) {
-                    femaleLayout.setVisibility(View.GONE);
-                    femaleLine.setVisibility(View.GONE);
-                } else {
-                    if (aquisationSpinner.getSelectedItemPosition() == 1) {
-                        femaleLayout.setVisibility(View.VISIBLE);
-                        femaleLine.setVisibility(View.VISIBLE);
-                    } else {
-                        femaleLayout.setVisibility(View.GONE);
-                        femaleLine.setVisibility(View.GONE);
-                    }
-                }
-            }
-        });*/
-
         animalTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -205,7 +227,7 @@ public class AddActivity extends AppCompatActivity {
                     breedLayout.setVisibility(View.VISIBLE);
                     ArrayList<String> al = db.getDataForBreedTable(i);
                     ArrayAdapter<String> aa = new ArrayAdapter<>(
-                            AddActivity.this,
+                            EditActivity.this,
                             R.layout.layout_text_view_black,
                             al);
                     al.add(0, "SELECT");
@@ -214,9 +236,14 @@ public class AddActivity extends AppCompatActivity {
                         breedLayout.setVisibility(View.GONE);
                     }
                     breedSpinner.setAdapter(aa);
-                    if (addAnimalModel != null && !newScreen) {
+                    if (addAnimalModel != null) {
                         Log.i("CUSTOM", "animal type inside breed = " + addAnimalModel.getBreed());
-                        breedSpinner.setSelection(addAnimalModel.getBreed(), true);
+                        try {
+                            breedSpinner.setSelection(addAnimalModel.getBreed(), true);
+                        } catch (Exception e) {
+                            addAnimalModel.setBreed(0);
+                            breedSpinner.setSelection(0,true);
+                        }
                         new Handler().post(new Runnable() {
                             @Override
                             public void run() {
@@ -226,10 +253,6 @@ public class AddActivity extends AppCompatActivity {
                                 }
                             }
                         });
-                        breedSpinner.setEnabled(false);
-                        breedSpinner.setFocusable(false);
-                    } else if (newScreen) {
-                        aquisationSpinner.setSelection(0);
                     }
                 } else {
                     breedLayout.setVisibility(View.GONE);
@@ -260,12 +283,12 @@ public class AddActivity extends AppCompatActivity {
                     motherIdLine.setVisibility(View.VISIBLE);
                     motherIdList = db.getAllFemalesTagIds(animalTypeSpinner.getSelectedItemPosition());
                     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
-                            AddActivity.this,
+                            EditActivity.this,
                             R.layout.layout_text_view_black, motherIdList);
                     if (!motherIdList.isEmpty()) {
                         motherIdList.add(0, "SELECT");
                         motherIdSpinner.setAdapter(arrayAdapter);
-                        if (addAnimalModel != null && !newScreen) {
+                        if (addAnimalModel != null) {
                             motherIdSpinner.setSelection(motherIdList.indexOf(addAnimalModel.getMotherId()));
                             new Handler().post(new Runnable() {
                                 @Override
@@ -281,8 +304,6 @@ public class AddActivity extends AppCompatActivity {
                                     }
                                 }
                             });
-                            motherIdSpinner.setEnabled(false);
-                            motherIdSpinner.setFocusable(false);
                         }
                         Log.i("CUSTOM", "Masters table record for mother_id spinner :: ");
                         for (String data : motherIdList) {
@@ -297,10 +318,6 @@ public class AddActivity extends AppCompatActivity {
                         aquisationSpinner.setSelection(0);
                     }
                 }
-                if (newScreen) {
-                    ((RadioButton) findViewById(R.id.radio_male_AddActivity)).setChecked(true);
-                    //((RadioButton) findViewById(R.id.radio_non_pregnant_AddActivity)).setChecked(true);
-                }
             }
 
             @Override
@@ -312,268 +329,31 @@ public class AddActivity extends AppCompatActivity {
         saveTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (saveTV.getText().toString().equals(getString(R.string.save))) {
-                    justNext = false;
-                    newScreen = true;
-                    if (checkData()) {
-                        addDetailsToLocalDatabase();
-                    }
-                } else if (saveTV.getText().toString().equals(getString(R.string.next))) {
-                    if (justPrev) {
-                        count--;
-                        justPrev = false;
-                    }
-                    count--;
-                    if (count < addAnimalArrayList.size() && count >= 0) {
-                        loadPreviousContent(count);
-                        disableComponents();
-                        justNext = true;
-                        editTV.setVisibility(View.VISIBLE);
-                    } else {
-                        clearUIElements();
-                        enableComponents();
-                        //loadPrerequisiteContent(-1);
-                        saveTV.setText(getString(R.string.save));
-                        newScreen = true;
-                        editTV.setVisibility(View.INVISIBLE);
-                    }
+                if (checkData()) {
+                    addDetailsToLocalDatabase();
                 }
-                scrollView.fullScroll(ScrollView.FOCUS_UP);
-                Log.i("CUSTOM", "after save click count = " + count);
             }
         });
 
-        prevTV.setOnClickListener(new View.OnClickListener() {
+        cancelTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (addAnimalArrayList.size() > 0 && count < addAnimalArrayList.size() && count >= 0) {
-                    if (justNext) {
-                        Log.i("CUSTOM", "in just next true");
-                        count++;
-                        justNext = false;
-                    }
-                    loadPreviousContent(count);
-                    disableComponents();
-                    count++;
-                    saveTV.setText(getString(R.string.next));
-                    justPrev = true;
-                    newScreen = false;
-                    editTV.setVisibility(View.VISIBLE);
-                } else {
-                    dialogDateUtil.showMessage("No Record Found.");
-                }
-                scrollView.fullScroll(ScrollView.FOCUS_UP);
-                Log.i("CUSTOM", "after prev click count = " + count);
+                finish();
             }
         });
 
-        editTV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(AddActivity.this, EditActivity.class);
-                i.putExtra("tag_id", tagIdED.getText().toString());
-                startActivity(i);
-            }
-        });
-    }
-
-    private void loadPreviousContent(int count) {
-        addAnimalModel = addAnimalArrayList.get(count);
-        Log.i("CUSTOM", "getting data at " + count);
-        //addAnimalModel = db.getAnimalDetailsBySrNo(sr_no);
-        if (addAnimalModel != null) {
-            Log.i("CUSTOM", "loading started");
-            tagIdED.setText(String.valueOf(addAnimalModel.getTagId()));
-            animalTypeSpinner.setSelection(addAnimalModel.getAnimalType(), false);
-            aquisationSpinner.setSelection(addAnimalModel.getAquisation(), false);
-            if (breedSpinner.getCount() > addAnimalModel.getBreed()) {
-                breedSpinner.setSelection(addAnimalModel.getBreed(), false);
-            }
-            if (addAnimalModel.getGender().equals("M")) {
-                Log.i("CUSTOM", "male checked");
-                RadioButton male = findViewById(R.id.radio_male_AddActivity);
-                male.setChecked(true);
-            } else {
-                Log.i("CUSTOM", "female checked");
-                RadioButton female = findViewById(R.id.radio_female_AddActivity);
-                female.setChecked(true);
-                /*if (addAnimalModel.getFemaleStatus().equals("Preg")) {
-                    RadioButton preg = findViewById(R.id.radio_pregnant_AddActivity);
-                    preg.setChecked(true);
-                } else {
-                    RadioButton nonPreg = findViewById(R.id.radio_non_pregnant_AddActivity);
-                    nonPreg.setChecked(true);
-                }*/
-            }
-
-            String[] tempDate = addAnimalModel.getDate().split("/");
-            ddED.setText(tempDate[0]);
-            mmED.setText(tempDate[1]);
-            yyyyED.setText(tempDate[2]);
-            String[] tempWeight = addAnimalModel.getWeight().split("\\.");
-            wtkgED.setText(String.valueOf(tempWeight[0]));
-            wtgmED.setText(String.valueOf(tempWeight[1]));
-            purposeSpinner.setSelection(addAnimalModel.getPurpose(), true);
-            if (aquisationSpinner.getSelectedItemPosition() == 1) {
-                priceED.setText(addAnimalModel.getPrice());
-            } else if (aquisationSpinner.getSelectedItemPosition() == 2) {
-                ArrayList<String> al = new ArrayList<>();
-                al.add(String.valueOf(addAnimalModel.getMotherId()));
-                Log.i("CUSTOM", "setting mother id = " + al.get(0));
-                ArrayAdapter<String> aa = new ArrayAdapter<>(
-                        AddActivity.this,
-                        R.layout.layout_text_view_black,
-                        al);
-                motherIdSpinner.setAdapter(aa);
-                motherIdSpinner.setSelection(0, true);
-            }
-            Log.i("CUSTOM", "done loading");
-        }
     }
 
     private void addDetailsToLocalDatabase() {
-        HashMap<String, String> response = db.userAddAnimalDetails(addAnimalModel);
+        HashMap<String, String> response = db.userEditAddAnimalDetails(addAnimalModel);
         if (Objects.equals(response.get("error"), "0")) {
-            count = 0;
-            dialogDateUtil.showMessage("Animal Added Successfully!");
-            clearUIElements();
-            addAnimalArrayList = db.getAllAnimalDetailsRecords();
-            Collections.sort(addAnimalArrayList, Collections.<AddAnimalModel>reverseOrder());
+            dialogDateUtil.showMessage("Animal Edited Successfully!");
+            finish();
         } else {
-            if (Objects.equals(response.get("message"), "tag_id_present")) {
-                dialogDateUtil.showMessage("Animal with TAG ID : " + addAnimalModel.getTagId() + " is already present." +
-                        "\nPlease use another TAG ID and then try again.");
-            } else {
+            if (Objects.equals(response.get("message"), "failure")) {
                 dialogDateUtil.showMessage("Internal Local Database Error");
             }
         }
-    }
-
-    private void clearUIElements() {
-        count = 0;
-        justNext = false;
-        tagIdED.setText("");
-        animalTypeSpinner.setSelection(0);
-        aquisationSpinner.setSelection(0);
-        RadioButton male = findViewById(R.id.radio_male_AddActivity);
-        male.setChecked(true);
-        breedSpinner.setSelection(0);
-        ddED.setText("");
-        mmED.setText("");
-        yyyyED.setText("");
-        wtkgED.setText("");
-        wtgmED.setText("000");
-        purposeSpinner.setSelection(0);
-        priceED.setText("");
-        motherIdSpinner.setSelection(0);
-        totalAnimalsCountTV.setText(String.valueOf(db.getTotalAnimalsCount()));
-    }
-
-    private void disableComponents() {
-        Log.i("CUSTOM", "started disable");
-        tagIdED.setEnabled(false);
-        tagIdED.setTextColor(getResources().getColor(android.R.color.black));
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Log.i("CUSTOM", "animal type spinner count = " + animalTypeSpinner.getCount() + " position = " + animalTypeSpinner.getSelectedItemPosition());
-                    if (animalTypeSpinner.getCount() > 0) {
-                        TextView tv = (TextView) animalTypeSpinner.getSelectedView();
-                        tv.setTextColor(Color.BLACK);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Log.i("CUSTOM", "exception = " + e.getMessage());
-                }
-            }
-        });
-        animalTypeSpinner.setEnabled(false);
-        animalTypeSpinner.setFocusable(false);
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    ((TextView) aquisationSpinner.getSelectedView()).setTextColor(Color.BLACK);
-                } catch (Exception e) {
-                }
-            }
-        });
-        aquisationSpinner.setEnabled(false);
-        aquisationSpinner.setFocusable(false);
-        ((TextView) findViewById(R.id.radio_male_AddActivity)).setTextColor(Color.BLACK);
-        findViewById(R.id.radio_male_AddActivity).setEnabled(false);
-        ((TextView) findViewById(R.id.radio_female_AddActivity)).setTextColor(Color.BLACK);
-        findViewById(R.id.radio_female_AddActivity).setEnabled(false);
-        /*((TextView) findViewById(R.id.radio_pregnant_AddActivity)).setTextColor(Color.BLACK);
-        findViewById(R.id.radio_pregnant_AddActivity).setEnabled(false);
-        ((TextView) findViewById(R.id.radio_non_pregnant_AddActivity)).setTextColor(Color.BLACK);
-        findViewById(R.id.radio_non_pregnant_AddActivity).setEnabled(false);*/
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    ((TextView) breedSpinner.getSelectedView()).setTextColor(Color.BLACK);
-                } catch (Exception e) {
-                }
-            }
-        });
-        breedSpinner.setEnabled(false);
-        breedSpinner.setFocusable(false);
-        try {
-            ((TextView) purposeSpinner.getSelectedView()).setTextColor(Color.BLACK);
-            purposeSpinner.setEnabled(false);
-            purposeSpinner.setFocusable(false);
-        } catch (Exception e) {
-        }
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Log.i("CUSTOM", "animal type spinner count = " + animalTypeSpinner.getCount() + " position = " + animalTypeSpinner.getSelectedItemPosition());
-                    if (motherIdSpinner.getCount() > 0) {
-                        ((TextView) motherIdSpinner.getSelectedView()).setTextColor(Color.BLACK);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Log.i("CUSTOM", "exception = " + e.getMessage());
-                }
-            }
-        });
-        motherIdSpinner.setEnabled(false);
-        motherIdSpinner.setFocusable(false);
-        ddED.setEnabled(false);
-        ddED.setTextColor(getResources().getColor(android.R.color.black));
-        mmED.setEnabled(false);
-        mmED.setTextColor(getResources().getColor(android.R.color.black));
-        yyyyED.setEnabled(false);
-        yyyyED.setTextColor(getResources().getColor(android.R.color.black));
-        wtkgED.setEnabled(false);
-        wtkgED.setTextColor(getResources().getColor(android.R.color.black));
-        wtgmED.setEnabled(false);
-        wtgmED.setTextColor(getResources().getColor(android.R.color.black));
-        priceED.setEnabled(false);
-        priceED.setTextColor(getResources().getColor(android.R.color.black));
-        Log.i("CUSTOM", "ended disable");
-    }
-
-    private void enableComponents() {
-        tagIdED.setEnabled(true);
-        animalTypeSpinner.setEnabled(true);
-        aquisationSpinner.setEnabled(true);
-        findViewById(R.id.radio_male_AddActivity).setEnabled(true);
-        findViewById(R.id.radio_female_AddActivity).setEnabled(true);
-        /*findViewById(R.id.radio_pregnant_AddActivity).setEnabled(true);
-        findViewById(R.id.radio_non_pregnant_AddActivity).setEnabled(true);*/
-        breedSpinner.setEnabled(true);
-        ddED.setEnabled(true);
-        mmED.setEnabled(true);
-        yyyyED.setEnabled(true);
-        wtkgED.setEnabled(true);
-        wtgmED.setEnabled(true);
-        purposeSpinner.setEnabled(true);
-        priceED.setEnabled(true);
-        motherIdSpinner.setEnabled(true);
     }
 
     private boolean checkData() {
@@ -669,11 +449,11 @@ public class AddActivity extends AppCompatActivity {
             }
             addAnimalModel.setMotherId(motherIdSpinner.getSelectedItem().toString());
         }
-        if (genderRG.getCheckedRadioButtonId() == R.id.radio_male_AddActivity) {
+        if (genderRG.getCheckedRadioButtonId() == R.id.radio_male_EditActivity) {
             addAnimalModel.setGender("M");
         } else {
             addAnimalModel.setGender("F");
-            /*if (femaleRG.getCheckedRadioButtonId() == R.id.radio_pregnant_AddActivity) {
+            /*if (femaleRG.getCheckedRadioButtonId() == R.id.radio_pregnant_EditActivity) {
                 addAnimalModel.setFemaleStatus("Preg");
             } else {
                 addAnimalModel.setFemaleStatus("NonPreg");
@@ -695,43 +475,38 @@ public class AddActivity extends AppCompatActivity {
     }
 
     private void declarations() {
-        scrollView = findViewById(R.id.scrollView_AddActivity);
-        totalAnimalsCountTV = findViewById(R.id.textView_total_animals_AddActivity);
-        prevTV = findViewById(R.id.textView_prev_AddActivity);
-        saveTV = findViewById(R.id.textView_save_AddActivity);
-        editTV = findViewById(R.id.textView_edit_AddActivity);
-        genderRG = findViewById(R.id.radioGroup_gender_AddActivity);
-        animalTypeSpinner = findViewById(R.id.spinner_animal_type_AddActivity);
-        aquisationSpinner = findViewById(R.id.spinner_aquisation_AddActivity);
-        breedSpinner = findViewById(R.id.spinner_breed_AddActivity);
-        purposeSpinner = findViewById(R.id.spinner_purpose_AddActivity);
-        motherIdSpinner = findViewById(R.id.spinner_mother_id_AddActivity);
-        tagIdED = findViewById(R.id.editText_tag_id_AddActivity);
-        wtkgED = findViewById(R.id.et_kg_weight_AddActivity);
-        wtgmED = findViewById(R.id.et_gm_weight_AddActivity);
-        ddED = findViewById(R.id.et1_date_AddActivity);
-        mmED = findViewById(R.id.et2_date_AddActivity);
-        yyyyED = findViewById(R.id.et3_date_AddActivity);
-        priceED = findViewById(R.id.editText_price_AddActivity);
-        priceLayout = findViewById(R.id.layout_price_AddActivity);
-        motherIdLayout = findViewById(R.id.layout_mother_id_AddActivity);
-        motherIdLine = findViewById(R.id.line_mother_id_AddActivity);
-        breedLayout = findViewById(R.id.layout_breed_AddActivity);
-        //femaleLayout = findViewById(R.id.layout_female_group_AddActivity);
-        //femaleLine = findViewById(R.id.line_female_group_AddActivity);
-        //femaleRG = findViewById(R.id.radioGroup_female_AddActivity);
+        scrollView = findViewById(R.id.scrollView_EditActivity);
+        cancelTV = findViewById(R.id.textView_cancel_EditActivity);
+        saveTV = findViewById(R.id.textView_save_EditActivity);
+        genderRG = findViewById(R.id.radioGroup_gender_EditActivity);
+        animalTypeSpinner = findViewById(R.id.spinner_animal_type_EditActivity);
+        aquisationSpinner = findViewById(R.id.spinner_aquisation_EditActivity);
+        breedSpinner = findViewById(R.id.spinner_breed_EditActivity);
+        purposeSpinner = findViewById(R.id.spinner_purpose_EditActivity);
+        motherIdSpinner = findViewById(R.id.spinner_mother_id_EditActivity);
+        tagIdED = findViewById(R.id.editText_tag_id_EditActivity);
+        wtkgED = findViewById(R.id.et_kg_weight_EditActivity);
+        wtgmED = findViewById(R.id.et_gm_weight_EditActivity);
+        ddED = findViewById(R.id.et1_date_EditActivity);
+        mmED = findViewById(R.id.et2_date_EditActivity);
+        yyyyED = findViewById(R.id.et3_date_EditActivity);
+        priceED = findViewById(R.id.editText_price_EditActivity);
+        priceLayout = findViewById(R.id.layout_price_EditActivity);
+        motherIdLayout = findViewById(R.id.layout_mother_id_EditActivity);
+        motherIdLine = findViewById(R.id.line_mother_id_EditActivity);
+        breedLayout = findViewById(R.id.layout_breed_EditActivity);
+        //femaleLayout = findViewById(R.id.layout_female_group_EditActivity);
+        //femaleLine = findViewById(R.id.line_female_group_EditActivity);
+        //femaleRG = findViewById(R.id.radioGroup_female_EditActivity);
         //femaleLayout.setVisibility(View.GONE);
         //femaleLine.setVisibility(View.GONE);
 
         breedLayout.setVisibility(View.GONE);
-        dialogDateUtil = new DialogDateUtil(AddActivity.this);
-        db = new LocalDatabase(AddActivity.this);
-        totalAnimalsCountTV.setText(String.valueOf(db.getTotalAnimalsCount()));
-        addAnimalArrayList = db.getAllAnimalDetailsRecords();
-        Collections.sort(addAnimalArrayList, Collections.<AddAnimalModel>reverseOrder());
-
+        dialogDateUtil = new DialogDateUtil(EditActivity.this);
+        db = new LocalDatabase(EditActivity.this);
+        addAnimalModel = db.getDetailsForTagID(tagId);
         ArrayList<String> animalType = db.getDataForMastersTable(LocalDatabase.TABLE_ANIMAL_TYPE);
-        ArrayAdapter animalTypeAdapter = new ArrayAdapter<String>(AddActivity.this,
+        ArrayAdapter animalTypeAdapter = new ArrayAdapter<String>(EditActivity.this,
                 R.layout.layout_text_view_black,
                 animalType);
         animalTypeSpinner.setAdapter(animalTypeAdapter);
@@ -741,7 +516,7 @@ public class AddActivity extends AppCompatActivity {
         }
 */
         ArrayList<String> aquisationType = db.getDataForMastersTable(LocalDatabase.TABLE_AQUISATION);
-        ArrayAdapter aquisationTypeAdapter = new ArrayAdapter<String>(AddActivity.this,
+        ArrayAdapter aquisationTypeAdapter = new ArrayAdapter<String>(EditActivity.this,
                 R.layout.layout_text_view_black,
                 aquisationType);
         aquisationSpinner.setAdapter(aquisationTypeAdapter);
@@ -751,7 +526,7 @@ public class AddActivity extends AppCompatActivity {
         }*/
 
         /*ArrayList<String> breedType = db.getDataForMastersTable(LocalDatabase.TABLE_BREED);
-        ArrayAdapter breedTypeAdapter = new ArrayAdapter<String>(AddActivity.this,
+        ArrayAdapter breedTypeAdapter = new ArrayAdapter<String>(EditActivity.this,
                 R.layout.layout_text_view_black,
                 breedType);
         breedSpinner.setAdapter(breedTypeAdapter);*/
@@ -761,7 +536,7 @@ public class AddActivity extends AppCompatActivity {
         }*/
 
         ArrayList<String> purposeType = db.getDataForMastersTable(LocalDatabase.TABLE_PURPOSE);
-        ArrayAdapter purposeTypeAdapter = new ArrayAdapter<String>(AddActivity.this,
+        ArrayAdapter purposeTypeAdapter = new ArrayAdapter<String>(EditActivity.this,
                 R.layout.layout_text_view_black,
                 purposeType);
         purposeSpinner.setAdapter(purposeTypeAdapter);
@@ -785,7 +560,7 @@ public class AddActivity extends AppCompatActivity {
             finish();
         }
         if (id == R.id.action_about_us) {
-            startActivity(new Intent(AddActivity.this, AboutUsActivity.class)
+            startActivity(new Intent(EditActivity.this, AboutUsActivity.class)
                     .putExtra("from", "add_activity"));
             finish();
         }

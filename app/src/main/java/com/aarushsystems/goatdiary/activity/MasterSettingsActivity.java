@@ -149,7 +149,7 @@ public class MasterSettingsActivity extends AppCompatActivity {
                             dialogDateUtil.showMessage("Local Database Error.");
                         }
                     } else if (delSpinner.getSelectedItemPosition() == 8) {
-                        if(db.deleteAnimalPermanently(recordSpinner.getSelectedItem().toString())){
+                        if (db.deleteAnimalPermanently(recordSpinner.getSelectedItem().toString())) {
                             dialogDateUtil.showMessage("Record Deleted.");
                             //delDisplayTV.setVisibility(View.GONE);
                             ArrayList<String> al = db.getAllNonDeletedTagIds();
@@ -161,7 +161,7 @@ public class MasterSettingsActivity extends AppCompatActivity {
                                     R.layout.layout_text_view_black, al);
                             recordSpinner.setAdapter(aa);
                             delSpinner.setSelection(0);
-                        }else {
+                        } else {
                             dialogDateUtil.showMessage("Local Database Error.");
                         }
                     } else if (delSpinner.getSelectedItemPosition() == 9) {
@@ -740,8 +740,8 @@ public class MasterSettingsActivity extends AppCompatActivity {
             data = db.getSingleRecordBySrNo(delTableName, Integer.parseInt(recordSpinner.getSelectedItem().toString()), false);
             data = data.replace("null", "NA");
             data = data.replace(": \n", ": NA\n");
-            if(data.trim().lastIndexOf(":") == data.length()-1){
-                data=data.replace(": ",": NA");
+            if (data.trim().lastIndexOf(":") == data.length() - 1) {
+                data = data.replace(": ", ": NA");
             }
         }
         delDisplayTV.setText(data);

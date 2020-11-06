@@ -194,16 +194,6 @@
 
                 </LinearLayout>
 
-
-                <!--<Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/button_blue"
-                    android:text="@string/go"
-                    android:textColor="@android:color/white" />-->
-
                 <!-- TODO :: Listview size dynamic -->
                 <!--ADD-->
                 <LinearLayout
@@ -255,19 +245,19 @@
 
                         <!--android:layout_height="100dp"-->
                         <ListView
-                            android:scrollbarSize="8dp"
                             android:id="@+id/listView_add_display_MasterSettingsActivity"
-                            android:layout_width="match_parent"
                             style="@style/scrollbar_shape_style"
+                            android:layout_width="match_parent"
                             android:layout_height="100dp"
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="12dp"
                             android:layout_marginBottom="5dp"
-                            android:scrollbarStyle="outsideInset"
                             android:background="@drawable/outline_edittext_blue"
                             android:fadeScrollbars="false"
                             android:scrollbarAlwaysDrawVerticalTrack="true"
+                            android:scrollbarSize="8dp"
+                            android:scrollbarStyle="outsideInset"
                             android:scrollbars="vertical" />
 
                         <LinearLayout
@@ -539,6 +529,7 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <!--Footer : Clear Button-->
             <LinearLayout
                 android:id="@+id/layout_footer_DeleteActivity"
                 android:layout_width="match_parent"

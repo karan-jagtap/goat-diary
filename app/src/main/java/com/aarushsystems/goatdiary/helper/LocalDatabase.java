@@ -643,6 +643,35 @@ public class LocalDatabase extends SQLiteOpenHelper {
         return false;
     }
 
+    public HashMap<String, String> userEditAddAnimalDetails(AddAnimalModel model) {
+        SQLiteDatabase db = getWritableDatabase();
+        HashMap<String, String> response = new HashMap<>();
+        ContentValues cv = new ContentValues();
+        cv.put(KEY_ANIMAL_TYPE, model.getAnimalType());
+        cv.put(KEY_AQUISATION, model.getAquisation());
+        cv.put(KEY_GENDER, model.getGender());
+        // cv.put(KEY_FEMALE_STATUS, model.getFemaleStatus());
+        cv.put(KEY_BREED, model.getBreed());
+        cv.put(KEY_DATE, model.getDate());
+        cv.put(KEY_WEIGHT, model.getWeight());
+        cv.put(KEY_PURPOSE, model.getPurpose());
+        cv.put(KEY_MOTHER_ID, model.getMotherId());
+        cv.put(KEY_PRICE, model.getPrice());
+//        cv.put(KEY_RELEASE, model.getRelease());
+//        cv.put(KEY_DELETED, model.getDeleted());
+        int rows = db.update(TABLE_ANIMAL_DETAILS, cv, KEY_TAG_ID + "= ?", new String[]{String.valueOf(model.getTagId())});
+        if(rows==1){
+            response.put("error", "0");
+            response.put("message", "success");
+            db.close();
+            return response;
+        }
+        response.put("error", "1");
+        response.put("message", "failure");
+        db.close();
+        return response;
+    }
+
     public HashMap<String, String> userAddAnimalDetails(AddAnimalModel model) {
         SQLiteDatabase db = getReadableDatabase();
         HashMap<String, String> response = new HashMap<>();
