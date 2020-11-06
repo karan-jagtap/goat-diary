@@ -613,14 +613,16 @@ public class HealthCareActivity extends AppCompatActivity {
 
     private void loadDisplayBox(String tagId) {
         addAnimalModel = db.getDetailsForTagID(tagId);
-        animalTypeTV.setText(db.getFieldBySrNo(addAnimalModel.getAnimalType(), LocalDatabase.TABLE_ANIMAL_TYPE));
-        breedTV.setText(db.getFieldBySrNo(addAnimalModel.getBreed(), LocalDatabase.TABLE_BREED));
-        dateTV.setText(addAnimalModel.getDate());
-        weightTV.setText(addAnimalModel.getWeight());
-        if (addAnimalModel.getGender().equals("M")) {
-            genderTV.setText(getString(R.string.male));
-        } else {
-            genderTV.setText(getString(R.string.female));
+        if (addAnimalModel != null) {
+            animalTypeTV.setText(db.getFieldBySrNo(addAnimalModel.getAnimalType(), LocalDatabase.TABLE_ANIMAL_TYPE));
+            breedTV.setText(db.getFieldBySrNo(addAnimalModel.getBreed(), LocalDatabase.TABLE_BREED));
+            dateTV.setText(addAnimalModel.getDate());
+            weightTV.setText(addAnimalModel.getWeight());
+            if (addAnimalModel.getGender().equals("M")) {
+                genderTV.setText(getString(R.string.male));
+            } else {
+                genderTV.setText(getString(R.string.female));
+            }
         }
     }
 

@@ -161,7 +161,6 @@ public class MasterSettingsActivity extends AppCompatActivity {
                                 ArrayAdapter<String> aa = new ArrayAdapter<>(MasterSettingsActivity.this,
                                         R.layout.layout_text_view_black, al);
                                 recordSpinner.setAdapter(aa);
-                                delSpinner.setSelection(0);
                             } else {
                                 dialogDateUtil.showMessage("Local Database Error.");
                             }
@@ -182,7 +181,6 @@ public class MasterSettingsActivity extends AppCompatActivity {
                                 ArrayAdapter<String> aa = new ArrayAdapter<>(MasterSettingsActivity.this,
                                         R.layout.layout_text_view_black, al);
                                 recordSpinner.setAdapter(aa);
-                                delSpinner.setSelection(0);
                             } else {
                                 dialogDateUtil.showMessage("Local Database Error.");
                             }
