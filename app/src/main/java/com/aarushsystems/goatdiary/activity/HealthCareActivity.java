@@ -372,8 +372,6 @@ public class HealthCareActivity extends AppCompatActivity {
             if (boosterSpinner.getSelectedItemPosition() == 0) {
                 dialogDateUtil.showMessage("Please select Booster.");
                 return false;
-            } else {
-
             }
         }
         if (doseSpinner.getSelectedItemPosition() == 0) {
@@ -507,6 +505,7 @@ public class HealthCareActivity extends AppCompatActivity {
         } else {
             //Log.i("CUSTOM", "Tag id list is not empty");
             vaccineSpinner.setAdapter(arrayAdapterVaccine);
+            boosterSpinner.setAdapter(arrayAdapterVaccine);
             //loadDisplayBox(vaccineSpinner.getSelectedItem().toString());
         }
         tagIdSpinner.setAdapter(arrayAdapter);
@@ -571,6 +570,17 @@ public class HealthCareActivity extends AppCompatActivity {
         });
         boosterSpinner.setEnabled(false);
         boosterSpinner.setFocusable(false);
+        try {
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    if (boosterSpinner.getCount() > 0) {
+                        ((TextView) boosterSpinner.getSelectedView()).setTextColor(getResources().getColor(android.R.color.black));
+                    }
+                }
+            });
+        } catch (Exception e) {
+        }
         ddED.setEnabled(false);
         ddED.setTextColor(getResources().getColor(android.R.color.black));
         mmED.setEnabled(false);

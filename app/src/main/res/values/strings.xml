@@ -249,11 +249,6 @@
         <item>9</item>
         <item>12</item>
     </string-array>
-    <string-array name="m7">
-        <item>SELECT</item>
-        <item>PPR</item>
-        <item>ETV</item>
-    </string-array>
     <string-array name="m13">
         <item>SELECT</item>
         <item>PRODUCTION</item>
