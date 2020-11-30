@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -55,7 +55,7 @@
     <style name="CheckBox.BreedingActivity" parent="Theme.AppCompat.Light">
         <item name="colorControlNormal">@color/colorAccent</item>
         <item name="colorControlActivated">@color/colorAccent</item>
-        <item name="android:buttonTint">@color/colorAccent</item>
+        <item name="android:buttonTint" tools:targetApi="lollipop">@color/colorAccent</item>
     </style>
 
     <style name="scrollbar_shape_style">

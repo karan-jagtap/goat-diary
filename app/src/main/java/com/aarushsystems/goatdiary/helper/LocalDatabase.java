@@ -2236,7 +2236,7 @@ public class LocalDatabase extends SQLiteOpenHelper {
                 ")" +
                 " ORDER BY " + KEY_TAG_ID +
                 ";";
-
+        Log.i("CUSTOM","SELECT QUERY = "+selectQuery);
         Cursor cursor = db.rawQuery(selectQuery, null);
         int count = 0;
         while (cursor.moveToNext()) {

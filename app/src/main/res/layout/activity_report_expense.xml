@@ -68,7 +68,8 @@
             android:textAllCaps="true"
             android:textAlignment="center"
             android:textColor="@android:color/black"
-            android:textSize="17sp" />
+            android:textSize="17sp"
+            tools:ignore="RtlCompat" />
 
         <LinearLayout
             android:layout_width="0dp"

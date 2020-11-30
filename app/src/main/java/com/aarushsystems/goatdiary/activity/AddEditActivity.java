@@ -84,13 +84,6 @@ public class AddEditActivity extends AppCompatActivity {
             Log.i("CUSTOM", "female checked");
             RadioButton female = findViewById(R.id.radio_female_EditActivity);
             female.setChecked(true);
-                /*if (addAnimalModel.getFemaleStatus().equals("Preg")) {
-                    RadioButton preg = findViewById(R.id.radio_pregnant_AddActivity);
-                    preg.setChecked(true);
-                } else {
-                    RadioButton nonPreg = findViewById(R.id.radio_non_pregnant_AddActivity);
-                    nonPreg.setChecked(true);
-                }*/
         }
         String[] tempDate = addAnimalModel.getDate().split("/");
         ddED.setText(tempDate[0]);
@@ -111,7 +104,12 @@ public class AddEditActivity extends AppCompatActivity {
                     R.layout.layout_text_view_black,
                     al);
             motherIdSpinner.setAdapter(aa);
-            motherIdSpinner.setSelection(0, true);
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    motherIdSpinner.setSelection(0, true);
+                }
+            });
         }
     }
 
@@ -243,7 +241,7 @@ public class AddEditActivity extends AppCompatActivity {
                             breedSpinner.setSelection(addAnimalModel.getBreed(), true);
                         } catch (Exception e) {
                             addAnimalModel.setBreed(0);
-                            breedSpinner.setSelection(0,true);
+                            breedSpinner.setSelection(0, true);
                         }
                         new Handler().post(new Runnable() {
                             @Override
@@ -256,6 +254,8 @@ public class AddEditActivity extends AppCompatActivity {
                         });
                     }
                 } else {
+                    addAnimalModel.setBreed(0);
+                    breedSpinner.setSelection(0, true);
                     breedLayout.setVisibility(View.GONE);
                 }
                 new String("1,3,4,5,6,7,9,10,12");
@@ -283,6 +283,10 @@ public class AddEditActivity extends AppCompatActivity {
                     motherIdLayout.setVisibility(View.VISIBLE);
                     motherIdLine.setVisibility(View.VISIBLE);
                     motherIdList = db.getAllFemalesTagIds(animalTypeSpinner.getSelectedItemPosition());
+                    try {
+                        motherIdList.remove(tagId);
+                    } catch (Exception ignore) {
+                    }
                     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
                             AddEditActivity.this,
                             R.layout.layout_text_view_black, motherIdList);
@@ -290,25 +294,7 @@ public class AddEditActivity extends AppCompatActivity {
                         motherIdList.add(0, "SELECT");
                         motherIdSpinner.setAdapter(arrayAdapter);
                         if (addAnimalModel != null) {
-                            motherIdSpinner.setSelection(motherIdList.indexOf(addAnimalModel.getMotherId()));
-                            new Handler().post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    try {
-                                        Log.i("CUSTOM", "animal type spinner count = " + animalTypeSpinner.getCount() + " position = " + animalTypeSpinner.getSelectedItemPosition());
-                                        if (motherIdSpinner.getCount() > 0) {
-                                            ((TextView) motherIdSpinner.getSelectedView()).setTextColor(Color.BLACK);
-                                        }
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                        Log.i("CUSTOM", "exception = " + e.getMessage());
-                                    }
-                                }
-                            });
-                        }
-                        Log.i("CUSTOM", "Masters table record for mother_id spinner :: ");
-                        for (String data : motherIdList) {
-                            Log.i("CUSTOM", data);
+                            motherIdSpinner.setSelection(motherIdList.indexOf(addAnimalModel.getMotherId()), true);
                         }
                     } else {
                         if (animalTypeSpinner.getSelectedItemPosition() != 0) {

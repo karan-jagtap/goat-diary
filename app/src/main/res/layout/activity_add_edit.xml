@@ -883,7 +883,8 @@
                     android:text="@string/cancel"
                     android:textAlignment="center"
                     android:textColor="@android:color/white"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:ignore="RtlCompat" />
 
                 <View
                     android:layout_width="0dp"
@@ -906,7 +907,8 @@
                     android:text="@string/save"
                     android:textAlignment="center"
                     android:textColor="@android:color/white"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:ignore="RtlCompat" />
 
             </LinearLayout>
         </LinearLayout>

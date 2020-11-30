@@ -786,7 +786,8 @@
                     android:text="@string/prev"
                     android:textAlignment="center"
                     android:textColor="@android:color/white"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:ignore="RtlCompat" />
 
                 <TextView
                     android:id="@+id/textView_edit_DeleteActivity"
@@ -825,7 +826,8 @@
                     android:text="@string/next"
                     android:textAlignment="center"
                     android:textColor="@android:color/white"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:ignore="RtlCompat" />
 
             </LinearLayout>
         </LinearLayout>

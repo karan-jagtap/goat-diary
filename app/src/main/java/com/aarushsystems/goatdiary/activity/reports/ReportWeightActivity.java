@@ -122,6 +122,7 @@ public class ReportWeightActivity extends AppCompatActivity {
     private void loadDetailView(int animalType, int breed) {
         if (rawArrayList.isEmpty()) {
             Log.i("CUSTOM", "RAW ARRAY LIST");
+            Log.i("CUSTOM","ANIMAL TYPE = "+animalType+" BREED = "+breed);
             rawArrayList = db.getReportWeight(animalType, breed);
         }
         if (rawArrayList.isEmpty()) {
@@ -243,7 +244,9 @@ public class ReportWeightActivity extends AppCompatActivity {
                         end = simpleDateFormat.parse(rm.getLastDate());
                         long difference = end.getTime() - start.getTime();
                         float daysBetween = TimeUnit.DAYS.convert(difference, TimeUnit.MILLISECONDS);
-                        float perday = rm.getTotalWeight() / daysBetween;
+                        /**CLIENT CHANGE : 25/11/2020**/
+                        // float perday = rm.getTotalWeight() / daysBetween;
+                        float perday = (rm.getLastWeight() - rm.getFirstWeight())/daysBetween;
                         float perchange = (((rm.getLastWeight() - rm.getFirstWeight()) / rm.getFirstWeight()) * 100);
                         if (perchange < 0) {
                             rm.setWeightGainPerDay(perday * -1);
@@ -251,8 +254,8 @@ public class ReportWeightActivity extends AppCompatActivity {
                             rm.setWeightGainPerDay(perday);
                         }
                         rm.setPerChange(perchange);
-                        Log.i("CUSTOM", "diff = " + difference + " daysbetween = " + daysBetween +
-                                " perday = " + perday + " perchange = " + perchange);
+                        Log.i("CUSTOM", "---------------diff = " + difference + " daysbetween = " + daysBetween +
+                                " perday = " + perday + " perchange = " + perchange+ " total weight = "+rm.getTotalWeight());
                         if (difference != 0) {
                             cell.add(new Cell(df.format(rm.getPerChange())));
                             cell.add(new Cell(df.format(rm.getWeightGainPerDay())));
@@ -315,7 +318,7 @@ public class ReportWeightActivity extends AppCompatActivity {
         rawArrayList = new ArrayList<>();
 
         ArrayList<String> animalType = db.getDataForMastersTable(LocalDatabase.TABLE_ANIMAL_TYPE);
-        ArrayAdapter animalTypeAdapter = new ArrayAdapter<String>(ReportWeightActivity.this,
+        ArrayAdapter<String> animalTypeAdapter = new ArrayAdapter<String>(ReportWeightActivity.this,
                 R.layout.layout_text_view_black,
                 animalType);
         animalTypeSpinner.setAdapter(animalTypeAdapter);
