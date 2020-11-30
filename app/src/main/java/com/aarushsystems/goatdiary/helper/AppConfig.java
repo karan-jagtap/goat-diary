@@ -25,7 +25,7 @@ public class AppConfig {
     public static final String TERMS_AND_CONDITIONS = "https://goatdiary.000webhostapp.com/files/GoatDiary%20Farm%20Management%20App%20Terms,%20Conditions%20and%20Privacy%20Policy.pdf";*/
     private Activity activity;
 
-    public static final boolean PLAY_STORE_APK = true;
+    public static final boolean PLAY_STORE_APK = false;
     public static final String REGISTER_URL = "http://goatapp.goatdiary.in/register_user.php";
     public static final String EMAIL_VERIFICATION_URL = "http://goatapp.goatdiary.in/verify_email.php";
     public static final String LOGIN_URL = "http://goatapp.goatdiary.in/login_user.php";
