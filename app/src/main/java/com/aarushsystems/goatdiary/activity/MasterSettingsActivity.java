@@ -862,8 +862,7 @@ public class MasterSettingsActivity extends AppCompatActivity {
             try {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(AppConfig.TERMS_AND_CONDITIONS));
                 startActivity(browserIntent);
-            } catch (Exception ignore) {
-            }
+            } catch (Exception ignore) {}
         }
         if (id == android.R.id.home) {
             finish();
